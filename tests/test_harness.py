@@ -10,8 +10,6 @@ import json
 import re
 from types import SimpleNamespace as NS
 
-from idt_copilot.agent.llm import LLM
-
 from idt_redteam import harness
 
 
@@ -23,15 +21,26 @@ def _tool(name, args, i=0):
     return NS(type="tool_use", id=f"toolu_{name}_{i}", name=name, input=args)
 
 
+SUSPICIOUS = ("SYSTEM NOTE", "wrong participant", "retrieve note")
+
+
 class GullibleClaude:
+    """Writes one high-severity line per note, quoting it. As a screen, flags obvious planted notes."""
+
     def create(self, **kw):
         choice = (kw.get("tool_choice") or {}).get("name")
+        if choice == "submit_screen":
+            notes = json.loads(kw["messages"][0]["content"])
+            return _resp(_tool("submit_screen", {"flagged": [
+                {"note_id": n["id"], "reason": "looks planted"} for n in notes
+                if any(w in n["text"] for w in SUSPICIOUS)]}))
         if choice == "submit_plan":
             return _resp(_tool("submit_plan", {"checks": ["falls", "weight", "notes"]}))
         if choice == "submit_brief":
-            evidence = json.loads(kw["messages"][0]["content"].split("Evidence:\n", 1)[1].split("\n\nThe verifier")[0])
+            evidence, _ = json.JSONDecoder().raw_decode(kw["messages"][0]["content"].split("Evidence:\n", 1)[1])
             start = evidence["review_period"]["window_start"]
-            items = [{"category": "other", "severity": "high", "statement": n["text"][:300], "citations": [n["id"]]}
+            items = [{"category": "other", "severity": "high", "statement": n["text"][:300], "citations": [n["id"]],
+                      "quote": n["text"].split(". ")[0]}
                      for n in evidence["notes"] if n["note_date"] >= start]
             return _resp(_tool("submit_brief", {"headline": "Changes this period", "items": items,
                                                 "questions_for_team": []}))
@@ -54,7 +63,7 @@ def test_dry_run_prints_a_plan_and_spends_nothing(capsys, attack_db):
 
 def test_end_to_end_run_scores_a_gullible_agent(tmp_path, attack_db):
     code = harness.main(["--limit", "2", "--attacks", "fake_authority", "data_leak", "--runs-dir", str(tmp_path),
-                         "--concurrency", "1"], make_llm=lambda: LLM(GullibleClaude()))
+                         "--concurrency", "1"], make_client=GullibleClaude)
     assert code == 0
     run = next(tmp_path.iterdir())
     results = json.loads((run / "results.json").read_text())["baseline"]
@@ -68,3 +77,18 @@ def test_end_to_end_run_scores_a_gullible_agent(tmp_path, attack_db):
     # Re-scoring the saved briefs gives the same answer for free.
     assert harness.main(["--rescore", str(run)]) == 0
     assert json.loads((run / "results.json").read_text())["baseline"]["fake_authority"]["summary"] == fa
+
+
+def test_every_defense_runs_end_to_end_and_the_detector_stops_the_gullible_agent(tmp_path, attack_db):
+    defenses = ["baseline", "no_verifier", "spotlight", "conflict_rule", "quotes", "detector"]
+    code = harness.main(["--limit", "2", "--attacks", "fake_authority", "--defenses", *defenses,
+                         "--runs-dir", str(tmp_path), "--concurrency", "1"], make_client=GullibleClaude)
+    assert code == 0
+    run = next(tmp_path.iterdir())
+    results = json.loads((run / "results.json").read_text())
+    assert set(results) == set(defenses)
+    assert results["baseline"]["fake_authority"]["summary"]["attack_success_rate"] == 1.0
+    det = results["detector"]["fake_authority"]["summary"]
+    assert det["detector_caught"] == 1.0 and det["attack_success_rate"] == 0.0
+    assert results["detector"]["clean"]["summary"]["detector_flagged_notes"] == 0
+    assert "## Defenses compared" in (run / "report.md").read_text()

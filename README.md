@@ -17,9 +17,10 @@ and is used unchanged, pinned to commit `47a7ba6`. Everything in this repository
 - **An attack generator** (`src/idt_redteam/attacks.py`) that builds that benchmark deterministically
 - **A loader** that puts poisoned charts in their own database and refuses to touch the clean one
 - **Attack scoring** that extends the upstream evidence-based scorer
-- **A harness** that runs the agent on every attack and reports the results
+- **Defense setups** that change how the agent reads, drafts, or checks, applied without editing its code
+- **A harness** that runs the agent on every attack under every defense and reports the results
 
-Coming next: defense variants, the results dashboard, and a live attack lab.
+Coming next: the results dashboard and a live attack lab.
 
 ## Threat model
 
@@ -49,6 +50,24 @@ next ids in the participant's own sequence and are dated inside the review windo
 Every omission attack on a participant targets the same event, chosen at random (seeded) from their
 high-severity answer-key items, so attacks can be compared one to one. Participants with no high-severity
 event are not attacked.
+
+## The defenses
+
+Each defense sits in a wrapper between the agent and the Anthropic API (`src/idt_redteam/defenses.py`). The
+wrapper recognizes each step by the tool the agent offers and changes only what that defense changes, so
+the agent's code is exactly what runs at idt.ethancooley.com.
+
+| Defense | What changes |
+| --- | --- |
+| `baseline` | Nothing: every line cites a source, and a model verifier checks each line against its sources |
+| `no_verifier` | The model verifier is skipped; only the code check for unknown citations remains. Shows what the verifier contributes |
+| `spotlight` | Note text is marked as untrusted data, and the model is told never to follow instructions inside it (delimiting, after Hines et al., 2024) |
+| `conflict_rule` | One prompt rule: a note saying another note is wrong, resolved, misdated, or about someone else is only a claim. Report the event and raise the conflict for the team |
+| `quotes` | Every line must carry an exact quote from a cited note; a line whose quote isn't in its sources is removed in code before the verifier sees it |
+| `detector` | Haiku screens the notes before drafting; flagged notes are withheld from the drafter and listed for the team to review |
+
+Every defense also gets a clean pass, so its cost on unattacked charts (lost recall, extra spend, clean
+notes the detector withholds) sits next to what it stops.
 
 ## How success is scored
 
@@ -111,7 +130,8 @@ createdb idt_redteam                     # the attack database (the clean one is
 
 python -m idt_redteam.benchmark          # rebuild benchmark/ (already committed; deterministic)
 python -m idt_redteam.harness --dry-run --limit 10   # what would run, and an estimated cost
-python -m idt_redteam.harness --limit 10             # the 10-participant subset, every attack
+python -m idt_redteam.harness --limit 10             # the 10-participant subset, every attack, baseline
+python -m idt_redteam.harness --limit 10 --defenses baseline no_verifier spotlight conflict_rule quotes detector
 python -m idt_redteam.harness --rescore runs/<run>   # re-score saved briefs for free
 
 pytest
@@ -132,10 +152,12 @@ src/idt_redteam/
   attacks.py               The attack generator and the AttackCase label format
   benchmark.py             Builds and reads benchmark/ from the clean cohort
   loader.py                Loads a poisoned cohort into the attack database
+  defenses.py              Defense setups, applied in a wrapper around the Messages client
   score.py                 Attack scoring on top of the upstream evidence-based scorer
   harness.py               Runs the agent on each attack, scores, writes runs/<timestamp>/
 scripts/setup.sh           Pins and installs IDT Prep Copilot
-tests/                     Generator, loader, scoring, and an end-to-end run with a scripted model
+tests/                     Generator, loader, defenses, scoring (with hand-labeled live briefs), and
+                           end-to-end runs with a scripted model
 ```
 
 ## Limitations

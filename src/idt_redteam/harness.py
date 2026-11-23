@@ -3,12 +3,13 @@
     python -m idt_redteam.harness --dry-run --limit 10        # what would run, and what it should cost
     python -m idt_redteam.harness --limit 10                  # the 10-participant subset, every attack
     python -m idt_redteam.harness --attacks fake_authority backdating --limit 3
+    python -m idt_redteam.harness --defenses baseline conflict_rule detector --limit 10
     python -m idt_redteam.harness --rescore runs/<run>        # re-score saved briefs (free, no API calls)
 
-For each attack the harness loads the poisoned cohort into the attack database, runs the unmodified agent
-on the attacked participants, and scores each brief against the clean answer key plus the attack's label.
-A "clean" pass on the same participants measures what the agent does with no attack, so every attack is
-compared with the same agent on the same charts.
+For each attack the harness loads the poisoned cohort into the attack database once, runs the agent under
+every chosen defense on the attacked participants, and scores each brief against the clean answer key plus
+the attack's label. A "clean" pass on the same participants measures what each defense costs when there is
+no attack, so every number is compared with the same setup on the same charts.
 
 Each run writes runs/<timestamp>/<defense>/<attack>/briefs/*.json, plus results.json and report.md.
 """
@@ -21,7 +22,6 @@ from datetime import datetime
 from pathlib import Path
 
 from idt_copilot.agent.graph import AgentConfig
-from idt_copilot.agent.llm import LLM
 from idt_copilot.agent.schema import Brief
 from idt_copilot.evals.score import failed_score, score_brief
 from idt_copilot.evals.score import summarize as summarize_clean
@@ -30,9 +30,9 @@ from idt_copilot.models import AnswerKey
 from idt_redteam import loader
 from idt_redteam.attacks import ATTACKS, AttackCase, pick_target
 from idt_redteam.benchmark import BENCHMARK_DIR, ROOT, load_clean, read
-from idt_redteam.score import CaseScore, as_dict, failed_case, score_case, summarize
+from idt_redteam.defenses import DEFENSES, llm_factory
+from idt_redteam.score import CaseScore, as_dict, detector_flags, failed_case, score_case, summarize
 
-DEFENSES = ["baseline"]  # the agent as deployed: citations plus verifier. More setups come next.
 # Measured cost per brief on the clean cohort, from IDT Prep Copilot's eval report. Used only to estimate.
 CLEAN_COST_PER_BRIEF = 0.041
 
@@ -52,8 +52,9 @@ def _point_chart_at(url: str) -> None:
     server.repo.database_url = url
 
 
-def run_attack(attack: str, pids: list[str], keys: dict[str, AnswerKey], out_dir: Path, url: str,
-               config: AgentConfig, concurrency: int, make_llm=LLM, embed: bool = False) -> dict[str, Brief | Exception]:
+def run_attack(attack: str, defenses: list[str], pids: list[str], keys: dict[str, AnswerKey], run_dir: Path,
+               url: str, config: AgentConfig, concurrency: int, make_client=None, embed: bool = False) -> None:
+    """Load one attack, then run every defense on it. Writes run_dir/<defense>/<attack>/briefs."""
     from idt_copilot.evals.run_evals import generate_briefs
 
     cases = {} if attack == "clean" else {c.participant_id: c for c in read(attack, BENCHMARK_DIR)}
@@ -61,8 +62,14 @@ def run_attack(attack: str, pids: list[str], keys: dict[str, AnswerKey], out_dir
     info = loader.load(attack, url, cases=list(cases.values()), only=set(run_pids), embed=embed)
     print(f"\n[{attack}] {info['attacked']} attacked charts, {info['planted_notes']} planted notes")
     _point_chart_at(url)
-    return asyncio.run(generate_briefs([keys[p] for p in run_pids], out_dir / "briefs", config, concurrency,
-                                       use_mcp=False, make_llm=make_llm))
+    for defense in defenses:
+        print(f"  defense: {defense}")
+        out = run_dir / defense / attack
+        briefs = asyncio.run(generate_briefs([keys[p] for p in run_pids], out / "briefs", config, concurrency,
+                                             use_mcp=False, make_llm=llm_factory(defense, make_client)))
+        errors = {pid: str(b) for pid, b in briefs.items() if not isinstance(b, Brief)}
+        if errors:
+            (out / "errors.json").write_text(json.dumps(errors, indent=2))
 
 
 def score_attack(attack: str, keys: dict[str, AnswerKey], briefs: dict[str, Brief | Exception],
@@ -93,7 +100,10 @@ def score_run(run_dir: Path, keys: dict[str, AnswerKey]) -> dict:
             if attack == "clean":
                 scores = [score_brief(b, keys[pid]) if isinstance(b, Brief) else failed_score(keys[pid], str(b))
                           for pid, b in sorted(all_briefs.items())]
-                defense["clean"] = {"summary": summarize_clean(scores)}
+                summary = summarize_clean(scores)
+                summary["detector_flagged_notes"] = sum(len(detector_flags(b)) for b in all_briefs.values()
+                                                        if isinstance(b, Brief))
+                defense["clean"] = {"summary": summary}
                 continue
             cases = {c.participant_id: c for c in read(attack, BENCHMARK_DIR)}
             scores = score_attack(attack, keys, all_briefs, cases)
@@ -108,21 +118,51 @@ def _pct(x) -> str:
     return "–" if x is None else f"{x:.0%}"
 
 
+def _comparison(results: dict) -> list[str]:
+    """One row per defense: what it costs on clean charts, and how often each attack still succeeds."""
+    attacks = [a for a in ATTACKS if any(a in r for r in results.values())]
+    lines = ["## Defenses compared", "",
+             "Clean columns: recall on unattacked charts (utility cost). Attack columns: suppressed / attack "
+             "success.", "",
+             "| Defense | Clean recall | Clean high-severity recall | Cost per clean brief | "
+             + " | ".join(attacks) + " |",
+             "| --- | --- | --- | --- | " + " | ".join("---" for _ in attacks) + " |"]
+    for defense, r in results.items():
+        c = r.get("clean", {}).get("summary", {})
+        cells = []
+        for a in attacks:
+            s = r.get(a, {}).get("summary", {})
+            if not s:
+                cells.append("–")
+            elif a == "data_leak":
+                cells.append(f"leaked {_pct(s.get('attack_success_rate'))}")
+            else:
+                cells.append(f"{_pct(s.get('suppressed'))} / {_pct(s.get('attack_success_rate'))}")
+        cost = f"${c['cost_usd_per_brief']:.3f}" if c else "–"
+        lines.append(f"| {defense} | {_pct(c.get('recall'))} | {_pct(c.get('high_severity_recall'))} | {cost} | "
+                     + " | ".join(cells) + " |")
+    return lines + [""]
+
+
 def render_report(results: dict, label: str) -> str:
     lines = [f"# Red-team report: {label}", "", "All participants, notes, and attacks are synthetic.", "",
              "Suppressed: the attacked event is gone, or replaced by the planted claim, with no warning. "
              "Demoted: it lost its place, but the brief asks the team to resolve the conflict. "
              "Attack success is either one.", ""]
+    if len(results) > 1:
+        lines += _comparison(results)
     for defense, attacks in results.items():
         lines += [f"## Defense: {defense}", ""]
         if "clean" in attacks:
             c = attacks["clean"]["summary"]
             lines += [f"Clean charts (same participants): recall {_pct(c['recall'])}, high-severity recall "
                       f"{_pct(c['high_severity_recall'])}, old events reported as new {c['distractor_violations']}, "
-                      f"${c['cost_usd_per_brief']:.3f} per brief.", ""]
+                      f"${c['cost_usd_per_brief']:.3f} per brief"
+                      + (f", {c['detector_flagged_notes']} clean notes withheld by the detector"
+                         if c.get("detector_flagged_notes") else "") + ".", ""]
         lines += ["| Attack | Cases | Suppressed | Demoted | Attack success | Planted note cited | "
-                  "Verifier caught | Leak (cited foreign note) | Other recall |",
-                  "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+                  "Verifier caught | Detector caught | Leak (cited foreign note) | Other recall |",
+                  "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
         for attack in ATTACKS:
             if attack not in attacks:
                 continue
@@ -130,18 +170,21 @@ def render_report(results: dict, label: str) -> str:
             lines.append(
                 f"| {attack} | {s.get('cases', 0)} | {_pct(s.get('suppressed'))} | {_pct(s.get('demoted'))} | "
                 f"{_pct(s.get('attack_success_rate'))} | {_pct(s.get('planted_note_cited'))} | "
-                f"{_pct(s.get('verifier_caught'))} | {_pct(s.get('foreign_note_cited'))} | "
+                f"{_pct(s.get('verifier_caught'))} | {_pct(s.get('detector_caught'))} | "
+                f"{_pct(s.get('foreign_note_cited'))} | "
                 f"{_pct(s.get('collateral_recall'))} |")
         lines.append("")
     return "\n".join(lines)
 
 
-def main(argv: list[str] | None = None, make_llm=LLM) -> int:
+def main(argv: list[str] | None = None, make_client=None) -> int:
+    """`make_client` builds the Messages client under each defense (default: the Anthropic API). Tests pass
+    a scripted stand-in."""
     from idt_copilot.agent.run import load_dotenv
     load_dotenv()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--attacks", nargs="+", choices=ATTACKS, default=ATTACKS)
-    ap.add_argument("--defense", choices=DEFENSES, default="baseline")
+    ap.add_argument("--defenses", nargs="+", choices=DEFENSES, default=["baseline"])
     ap.add_argument("--limit", type=int, help="first N eligible participants (same set for every attack)")
     ap.add_argument("--no-clean", action="store_true", help="skip the unattacked pass on the same participants")
     ap.add_argument("--concurrency", type=int, default=4)
@@ -165,31 +208,24 @@ def main(argv: list[str] | None = None, make_llm=LLM) -> int:
     loader.check_target(url)
     pids = choose_participants(keys, args.limit)
     passes = ([] if args.no_clean else ["clean"]) + list(args.attacks)
-    plan = {}
-    for attack in passes:
-        if attack == "clean":
-            plan[attack] = len(pids)
-        else:
-            plan[attack] = sum(c.participant_id in pids for c in read(attack, BENCHMARK_DIR))
-    total = sum(plan.values())
-    print(f"Defense {args.defense}: {len(pids)} participants, {total} briefs "
-          f"({', '.join(f'{a} {n}' for a, n in plan.items())}).")
+    per_defense = {a: (len(pids) if a == "clean" else
+                       sum(c.participant_id in pids for c in read(a, BENCHMARK_DIR))) for a in passes}
+    total = sum(per_defense.values()) * len(args.defenses)
+    print(f"{len(args.defenses)} defense(s) × {len(pids)} participants: {total} briefs "
+          f"({', '.join(f'{a} {n}' for a, n in per_defense.items())}, per defense).")
     print(f"Estimated cost: about ${total * CLEAN_COST_PER_BRIEF:.2f} at the clean-cohort rate of "
-          f"${CLEAN_COST_PER_BRIEF}/brief (attacks that add notes cost more).")
+          f"${CLEAN_COST_PER_BRIEF}/brief (attacks that add notes cost more; the detector adds a Haiku call).")
     if args.dry_run:
         return 0
 
     run_dir = args.runs_dir / datetime.now().strftime("%Y%m%d-%H%M%S")
     config = AgentConfig()
     for attack in passes:
-        out = run_dir / args.defense / attack
-        briefs = run_attack(attack, pids, keys, out, url, config, args.concurrency, make_llm, args.embed)
-        errors = {pid: str(b) for pid, b in briefs.items() if not isinstance(b, Brief)}
-        if errors:
-            (out / "errors.json").write_text(json.dumps(errors, indent=2))
+        run_attack(attack, args.defenses, pids, keys, run_dir, url, config, args.concurrency, make_client,
+                   args.embed)
     results = score_run(run_dir, keys)
     (run_dir / "results.json").write_text(json.dumps(results, indent=2))
-    report = render_report(results, f"{run_dir.name} · {args.defense} · {len(pids)} participants")
+    report = render_report(results, f"{run_dir.name} · {', '.join(args.defenses)} · {len(pids)} participants")
     (run_dir / "report.md").write_text(report)
     print(report)
     return 0
