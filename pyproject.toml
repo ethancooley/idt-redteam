@@ -1,0 +1,31 @@
+[project]
+name = "idt-redteam"
+version = "0.1.0"
+description = "Red-teaming an agentic clinical copilot with poisoned chart notes. All data is synthetic."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "idt-prep-copilot",  # the system under attack, installed from the pinned checkout by scripts/setup.sh
+    "pydantic>=2.6",
+    "psycopg[binary]>=3.1",
+]
+
+[project.optional-dependencies]
+embed = ["fastembed>=0.3"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+idt-redteam-benchmark = "idt_redteam.benchmark:main"
+idt-redteam-load = "idt_redteam.loader:main"
+idt-redteam-run = "idt_redteam.harness:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

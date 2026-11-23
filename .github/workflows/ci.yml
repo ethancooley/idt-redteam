@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests (scripted model, Postgres + pgvector)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: idt
+          POSTGRES_PASSWORD: idt
+          POSTGRES_DB: idt_redteam
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U idt" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      IDT_REDTEAM_DATABASE_URL: postgresql://idt:idt@localhost:5432/idt_redteam
+      IDT_DISABLE_EMBEDDINGS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: ./scripts/setup.sh
+      - name: The committed benchmark matches the generator
+        run: |
+          python -m idt_redteam.benchmark --out-dir /tmp/bench > /dev/null
+          diff -r benchmark /tmp/bench
+      - run: pytest -q
