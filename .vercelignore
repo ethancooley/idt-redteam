@@ -1,0 +1,8 @@
+vendor/
+runs/
+tests/
+results/
+benchmark/
+web/node_modules/
+web/dist/
+.venv/

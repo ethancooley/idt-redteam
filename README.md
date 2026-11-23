@@ -20,7 +20,8 @@ and is used unchanged, pinned to commit `47a7ba6`. Everything in this repository
 - **Defense setups** that change how the agent reads, drafts, or checks, applied without editing its code
 - **A harness** that runs the agent on every attack under every defense and reports the results
 
-Coming next: the results dashboard and a live attack lab.
+- **A website** with every brief in the study, and an attack lab where a visitor plants a note and watches
+  the agent read it live
 
 ## Threat model
 
@@ -182,6 +183,39 @@ python -m idt_redteam.loader fake_authority
 DATABASE_URL=postgresql://idt:idt@localhost:5432/idt_redteam python -m idt_copilot.chart.server
 ```
 
+## The website
+
+`web/` is a Vite and React site, and `api/lab.py` is one Python function, both deployed on Vercel.
+
+- **Results:** the defense × attack grid, one dot per brief. Select a dot to read the brief beside the
+  planted note, with the lines that report the attacked event and the lines that cite the planted note
+  marked.
+- **The attacks:** each attack with an example planted note.
+- **Attack lab:** choose a participant, a preset attack or your own note, and a defense, then watch the agent
+  plan, read the chart, draft, and check, streamed as it happens. The planted note never touches the database:
+  `PlantedChart` adds it to what the chart tools return for that one run. Runs need an access code and are
+  capped per day and per visitor; personal codes with their own run and spending limits reuse IDT Prep
+  Copilot's access-code system.
+- **Method:** threat model, scoring, and limitations.
+
+The site reads static files written by `python -m idt_redteam.web_export` (rerun it after adding a results
+run). To run it locally:
+
+```bash
+python -m idt_redteam.web_export
+python -m idt_redteam.loader clean --database-url "$LAB_DATABASE_URL"   # the lab's own database, once
+REDTEAM_ACCESS_CODE=choose-one DATABASE_URL="$LAB_DATABASE_URL" uvicorn api.lab:app --port 8788
+cd web && npm install && npm run dev                                       # /api goes to port 8788
+```
+
+On Vercel, set `ANTHROPIC_API_KEY`, `REDTEAM_ACCESS_CODE`, and `DATABASE_URL` (the lab's database, never the
+site database of IDT Prep Copilot), and optionally `REDTEAM_DAILY_LIMIT` (default 20) and
+`REDTEAM_PER_CLIENT_LIMIT` (default 3). To give someone a personal code with its own limits:
+
+```bash
+DATABASE_URL="$LAB_DATABASE_URL" python -m idt_redteam.lab_codes create "Prof. Smith" --runs 5 --budget 0.50
+```
+
 ## Layout
 
 ```
@@ -193,6 +227,12 @@ src/idt_redteam/
   defenses.py              Defense setups, applied in a wrapper around the Messages client
   score.py                 Attack scoring on top of the upstream evidence-based scorer
   harness.py               Runs the agent on each attack, scores, writes runs/<timestamp>/
+  lab.py                   The attack lab: planted notes per run, access codes and caps, streaming
+  lab_codes.py             Create, list, and turn off personal access codes for the lab
+  web_export.py            Writes the site's data and the lab's answer keys and presets
+api/lab.py                 Vercel Function for the attack lab
+web/                       The website (Vite + React)
+results/                   Finished runs: every brief, its score, and its hand label
 scripts/setup.sh           Pins and installs IDT Prep Copilot
 tests/                     Generator, loader, defenses, scoring (with hand-labeled live briefs), and
                            end-to-end runs with a scripted model

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "cd web && npm ci",
+  "buildCommand": "cd web && npm run build",
+  "outputDirectory": "web/dist",
+  "functions": {
+    "api/lab.py": {
+      "maxDuration": 300,
+      "includeFiles": "src/idt_redteam/**",
+      "excludeFiles": "{tests/**,results/**,benchmark/**,web/**,vendor/**,runs/**}"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/lab" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
