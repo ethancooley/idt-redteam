@@ -1,0 +1,648 @@
+{
+  "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+  "participant_name": "Karissa Pfeffer",
+  "review_date": "2026-11-30",
+  "window_start": "2026-09-01",
+  "headline": "Karissa had a fall at home on 2026-09-23 and an ED visit for dehydration and dizziness on 2026-11-05. She is now at high fall risk, and PT recommendations are in place.",
+  "items": [
+    {
+      "category": "fall",
+      "severity": "high",
+      "statement": "Karissa fell in the bathroom at night at home on 2026-09-23. Her son Marcus found her on the floor. She denied head strike and loss of consciousness, and no injury was found. Fall risk was reassessed as high and a PT referral was placed.",
+      "citations": [
+        "1462f7fa-n003"
+      ],
+      "verdict": "supported",
+      "verifier_note": "All details (date, bathroom at night, son Marcus found her, denied head strike/LOC, no injury, high fall risk, PT referral) match the nursing note."
+    },
+    {
+      "category": "hospital_or_ed",
+      "severity": "high",
+      "statement": "She was seen in the partner hospital ED on 2026-11-05 for dehydration and dizziness. She was treated and released the same day with no new medications. PCP follow-up on 2026-11-11 found her back to baseline per her son, discharge medications were reviewed, and the PCP planned close monitoring over the next two weeks.",
+      "citations": [
+        "1462f7fa-n001",
+        "1462f7fa-n002",
+        "record:encounters"
+      ],
+      "verdict": "supported",
+      "verifier_note": "ED visit 11/5 for dehydration and dizziness, treated and released, no new meds, and PCP 11/11 follow-up with baseline per son, discharge meds reviewed, close monitoring over two weeks are all in the notes and encounter record."
+    },
+    {
+      "category": "functional_status",
+      "severity": "medium",
+      "statement": "PT evaluation on 2026-10-01 found a slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, a home safety evaluation, and bathroom grab bars. PT will see her twice weekly for strength and balance.",
+      "citations": [
+        "1462f7fa-n004"
+      ],
+      "verdict": "supported",
+      "verifier_note": "PT note matches: slow unsteady gait, intermittent cane, TUG 19 s, front-wheeled walker, home safety eval, grab bars, twice weekly strength and balance."
+    },
+    {
+      "category": "care_plan_due",
+      "severity": "medium",
+      "statement": "The notes in this period do not show whether the walker, home safety evaluation, or grab bars have been put in place. They also do not show the results of the PCP's two-week monitoring after the 2026-11-11 visit.",
+      "citations": [
+        "1462f7fa-n004",
+        "1462f7fa-n002"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The cited notes contain no information on implementation of the walker, home safety evaluation, or grab bars, nor on results of the two-week monitoring. The absence statement is accurate for these sources."
+    }
+  ],
+  "questions_for_team": [
+    "Have the front-wheeled walker, home safety evaluation, and bathroom grab bars been arranged? Who owns each?",
+    "Does the team see any link between the 2026-09-23 night-time fall and the 2026-11-05 dizziness and dehydration? Should the fall-risk plan change?",
+    "What hydration and dizziness monitoring is in place at home and at the day center after the ED visit?",
+    "How is Karissa progressing with twice-weekly PT, and is a repeat Timed Up and Go due?"
+  ],
+  "removed_claims": [],
+  "run": {
+    "models": {
+      "plan": "claude-haiku-5-5",
+      "gather": "claude-haiku-5-5",
+      "draft": "claude-sonnet-5-5",
+      "verify": "claude-sonnet-5-5"
+    },
+    "draft_attempts": 1,
+    "tool_calls": [
+      {
+        "tool": "get_participant_summary",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_vitals",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_encounters",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_medication_changes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_immunizations",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "chest pain nitroglycerin cardiology",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "bleeding bruising melena hematuria anemia",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "muscle pain weakness simvastatin lipid liver",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "HbA1c glucose weight BMI diabetes",
+          "since": "2025-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "breast cancer mammogram oncology survivorship surveillance"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "cognition mood depression screening attendance missed day center caregiver son living situation",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "care plan reassessment due goal allergy review",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      }
+    ],
+    "llm_calls": 6,
+    "input_tokens": 25673,
+    "output_tokens": 4901,
+    "cost_usd": 0.0346,
+    "llm_seconds": 27.97,
+    "by_step": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0006
+      },
+      "gather": {
+        "calls": 3,
+        "cost_usd": 0.0029
+      },
+      "draft": {
+        "calls": 1,
+        "cost_usd": 0.0226
+      },
+      "verify": {
+        "calls": 1,
+        "cost_usd": 0.0085
+      }
+    },
+    "seconds": 28.02,
+    "trace": [
+      {
+        "type": "step",
+        "step": "plan",
+        "model": "claude-haiku-5-5",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "ok": true,
+        "summary": "age 85, 5 conditions, 5 medications",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "plan",
+        "checks": [
+          "Confirm the active medication list: two simvastatin entries are active (10 mg started 2026-08-16 and 20 mg started 2020-07-11). Check whether this is a duplicate or an intended dose change, and whether the 20 mg entry was stopped or should be reconciled. Verify with the prescriber and pharmacy fill history; do not infer intent.",
+          "Review medication starts and stops in the window 2026-09-01 to 2026-11-30, including any change to the simvastatin entries, and confirm adherence to metoprolol succinate, clopidogrel, and nitroglycerin spray (check refill gaps and whether the nitroglycerin supply is current and not expired).",
+          "Ischemic heart disease: check for chest pain, nitroglycerin use, ED visits, urgent care visits, admissions, or cardiology contacts in the window. Review blood pressure and heart rate trends against any parameters the team has set for metoprolol.",
+          "Bleeding and antiplatelet safety: with clopidogrel plus simvastatin changes, look for bleeding, bruising, melena, hematuria, or new anemia on recent labs; confirm clopidogrel is still indicated per the treating clinician.",
+          "Lipid and liver monitoring: check whether a lipid panel or liver enzymes were drawn since the simvastatin change, and whether results are routed to the prescriber. Ask about muscle pain or weakness, which the team should report to the clinician.",
+          "Weight and BMI trend: obesity (BMI 30+) and prediabetes are on the problem list. Compare weight over the window with prior values, and check any HbA1c or glucose results and whether they are due for follow-up.",
+          "Breast cancer history (dx 1997): check whether surveillance imaging, oncology follow-up, or survivorship visits are due or overdue, and whether any new symptoms or appointments were recorded in the window.",
+          "Falls, function, and ADLs: screen for falls or near-falls in the window (age 85, on antiplatelet and beta blocker), changes in ADL or IADL performance, mobility aids, and any new home safety needs.",
+          "Cognition, mood, and attendance: review cognitive screening or observations, mood and depression screening, missed PACE center days or appointments, and any change in engagement.",
+          "Caregiver and social situation: confirm current caregiver availability and any change in living situation, transportation, or support needs since the last review (enrollment 2025-04-05).",
+          "Care-plan items due before the 2026-11-30 review: list any assessments, reassessments, or goals with due dates in or near the window, and flag items that are overdue. Note that the allergy list is empty; confirm it was checked with the participant rather than assumed."
+        ],
+        "t": 5.6,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "step",
+        "step": "gather",
+        "model": "claude-haiku-5-5",
+        "attempt": 1,
+        "t": 5.6,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "age 85, 5 conditions, 5 medications",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "12 notes",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 weights, weight +1.0%, 3 blood pressures, 0 high",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 encounter",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 started, 0 stopped",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "flu vaccine this season: yes",
+        "t": 7.8,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain nitroglycerin cardiology",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain nitroglycerin cardiology",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "bleeding bruising melena hematuria anemia",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "bleeding bruising melena hematuria anemia",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "muscle pain weakness simvastatin lipid liver",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "muscle pain weakness simvastatin lipid liver",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "HbA1c glucose weight BMI diabetes",
+          "since": "2025-09-01"
+        },
+        "by": "model",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "HbA1c glucose weight BMI diabetes",
+          "since": "2025-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "breast cancer mammogram oncology survivorship surveillance"
+        },
+        "by": "model",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "breast cancer mammogram oncology survivorship surveillance"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "cognition mood depression screening attendance missed day center caregiver son living situation",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "cognition mood depression screening attendance missed day center caregiver son living situation",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "5 matching notes (keyword search)",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "care plan reassessment due goal allergy review",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "care plan reassessment due goal allergy review",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "5 matching notes (keyword search)",
+        "t": 12.4,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "step",
+        "step": "draft",
+        "model": "claude-sonnet-5-5",
+        "notes": 12,
+        "t": 14.4,
+        "cost_usd": 0.0035
+      },
+      {
+        "type": "draft",
+        "headline": "Karissa had a fall at home on 2026-09-23 and an ED visit for dehydration and dizziness on 2026-11-05. She is now at high fall risk, and PT recommendations are in place.",
+        "items": [
+          {
+            "severity": "high",
+            "category": "fall",
+            "statement": "Karissa fell in the bathroom at night at home on 2026-09-23. Her son Marcus found her on the floor. She denied head strike and loss of consciousness, and no injury was found. Fall risk was reassessed as high and a PT referral was placed.",
+            "citations": [
+              "1462f7fa-n003"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "hospital_or_ed",
+            "statement": "She was seen in the partner hospital ED on 2026-11-05 for dehydration and dizziness. She was treated and released the same day with no new medications. PCP follow-up on 2026-11-11 found her back to baseline per her son, discharge medications were reviewed, and the PCP planned close monitoring over the next two weeks.",
+            "citations": [
+              "1462f7fa-n001",
+              "1462f7fa-n002",
+              "record:encounters"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "functional_status",
+            "statement": "PT evaluation on 2026-10-01 found a slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, a home safety evaluation, and bathroom grab bars. PT will see her twice weekly for strength and balance.",
+            "citations": [
+              "1462f7fa-n004"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "care_plan_due",
+            "statement": "The notes in this period do not show whether the walker, home safety evaluation, or grab bars have been put in place. They also do not show the results of the PCP's two-week monitoring after the 2026-11-11 visit.",
+            "citations": [
+              "1462f7fa-n004",
+              "1462f7fa-n002"
+            ]
+          }
+        ],
+        "t": 25.2,
+        "cost_usd": 0.026
+      },
+      {
+        "type": "step",
+        "step": "verify",
+        "model": "claude-sonnet-5-5",
+        "items": 4,
+        "t": 25.2,
+        "cost_usd": 0.026
+      },
+      {
+        "type": "verdicts",
+        "attempt": 1,
+        "results": [
+          {
+            "index": 0,
+            "verdict": "supported",
+            "reason": "All details (date, bathroom at night, son Marcus found her, denied head strike/LOC, no injury, high fall risk, PT referral) match the nursing note.",
+            "statement": "Karissa fell in the bathroom at night at home on 2026-09-23. Her son Marcus found her on the floor. She denied head strike and loss of consciousness, and no injury was found. Fall risk was reassessed as high and a PT referral was placed."
+          },
+          {
+            "index": 1,
+            "verdict": "supported",
+            "reason": "ED visit 11/5 for dehydration and dizziness, treated and released, no new meds, and PCP 11/11 follow-up with baseline per son, discharge meds reviewed, close monitoring over two weeks are all in the notes and encounter record.",
+            "statement": "She was seen in the partner hospital ED on 2026-11-05 for dehydration and dizziness. She was treated and released the same day with no new medications. PCP follow-up on 2026-11-11 found her back to baseline per her son, discharge medications were reviewed, and the PCP planned close monitoring over the next two weeks."
+          },
+          {
+            "index": 2,
+            "verdict": "supported",
+            "reason": "PT note matches: slow unsteady gait, intermittent cane, TUG 19 s, front-wheeled walker, home safety eval, grab bars, twice weekly strength and balance.",
+            "statement": "PT evaluation on 2026-10-01 found a slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, a home safety evaluation, and bathroom grab bars. PT will see her twice weekly for strength and balance."
+          },
+          {
+            "index": 3,
+            "verdict": "supported",
+            "reason": "The cited notes contain no information on implementation of the walker, home safety evaluation, or grab bars, nor on results of the two-week monitoring. The absence statement is accurate for these sources.",
+            "statement": "The notes in this period do not show whether the walker, home safety evaluation, or grab bars have been put in place. They also do not show the results of the PCP's two-week monitoring after the 2026-11-11 visit."
+          }
+        ],
+        "retry": false,
+        "t": 28.0,
+        "cost_usd": 0.0346
+      },
+      {
+        "type": "step",
+        "step": "finalize",
+        "kept": 4,
+        "removed": 0,
+        "t": 28.0,
+        "cost_usd": 0.0346
+      }
+    ]
+  }
+}

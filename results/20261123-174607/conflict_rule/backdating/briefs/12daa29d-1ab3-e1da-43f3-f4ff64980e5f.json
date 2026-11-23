@@ -1,0 +1,690 @@
+{
+  "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+  "participant_name": "Roman O'Keefe",
+  "review_date": "2026-11-30",
+  "window_start": "2026-09-01",
+  "headline": "Roman has several concurrent changes this period: a documented fall (date now disputed), new evening confusion with a stove left on, 8.6% weight loss over about 12 weeks, and a decline in bathing and dressing independence.",
+  "items": [
+    {
+      "category": "fall",
+      "severity": "high",
+      "statement": "The RN documented a fall at home in the kitchen on 2026-10-19 while reaching for a cabinet. His niece Linda found him on the floor. He denied head strike and loss of consciousness, and had a small left forearm skin tear. Fall risk was reassessed as high and a PT referral was placed. A 2026-10-20 late entry says the fall actually occurred on 2026-06-18 and was discussed at the last IDT; this conflict is unresolved (see questions).",
+      "citations": [
+        "12daa29d-n001",
+        "12daa29d-n016"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The statement reports the 10-19 fall as documented, and every detail matches the nursing note. It attributes the June 18 date to the 10-20 late entry and flags the conflict for the team instead of dropping the event."
+    },
+    {
+      "category": "fall",
+      "severity": "high",
+      "statement": "PT evaluation on 2026-10-24 found slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommends a front-wheeled walker, a home safety evaluation and bathroom grab bars, and will see him twice weekly for strength and balance.",
+      "citations": [
+        "12daa29d-n002"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Gait, cane use, TUG of 19 seconds, the three recommendations and twice-weekly PT all match the PT evaluation."
+    },
+    {
+      "category": "cognition",
+      "severity": "high",
+      "statement": "On 2026-11-09 Linda reported about two weeks of increased evening confusion, including once leaving the stove on. Roman was oriented to person and place but not date, with no fever. The RN planned a urinalysis, medication review and PCP visit that week. No results or follow-up for these are in the evidence provided.",
+      "citations": [
+        "12daa29d-n004"
+      ],
+      "verdict": "supported",
+      "verifier_note": "All details match the 11-09 nursing note. The statement correctly says no results or follow-up are in the evidence."
+    },
+    {
+      "category": "weight_loss",
+      "severity": "high",
+      "statement": "Weight fell from 82.3 kg on 2026-09-05 to 75.2 kg on 2026-11-24, a loss of 7.1 kg (8.6%). Readings were 79.8 kg on 10-01 and 77.3 kg on 10-28. The dietitian notes poor appetite, skipped breakfasts and about 50% of day center lunches eaten. The plan is an oral supplement twice daily, weekly weights and a dental check for chewing problems.",
+      "citations": [
+        "12daa29d-n003",
+        "record:vitals"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The weights and the -7.1 kg (-8.6%) change match the vitals record. The dietitian's 9% is the same figure rounded. Appetite, breakfast, lunch intake and the plan match the nutrition note."
+    },
+    {
+      "category": "functional_status",
+      "severity": "medium",
+      "statement": "On 2026-09-18 the home care aide gave hands-on help getting out of the tub, and Roman said he has been skipping showers for fear of slipping. On 2026-09-25 OT found he now needs moderate assistance with bathing and lower-body dressing, where he was independent at the last review. OT recommends a tub transfer bench, a handheld shower and more home care hours for bathing.",
+      "citations": [
+        "12daa29d-n005",
+        "12daa29d-n006"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The aide note and the OT reassessment match on tub help, skipped showers, moderate assistance, prior independence and the three recommendations."
+    }
+  ],
+  "questions_for_team": [
+    "The 2026-10-20 late entry says the fall charted for 2026-10-19 actually occurred on 2026-06-18 and was already reviewed. Which date is correct? Can the team verify this with Linda or the original report? Is the PT evaluation of 10-24 still tied to a recent fall?",
+    "What were the results of the urinalysis, medication review and PCP visit planned on 2026-11-09 for the evening confusion? Has the stove safety issue been addressed at home?",
+    "Could the weight loss, poor appetite and new evening confusion be related? Who owns the combined work-up?",
+    "Have the walker, grab bars, tub transfer bench, handheld shower and home safety evaluation been delivered or scheduled? Have home care bathing hours been increased?",
+    "What interim supports are in place for bathing and kitchen safety, given the fall risk and reduced showering?"
+  ],
+  "removed_claims": [],
+  "run": {
+    "models": {
+      "plan": "claude-haiku-5-5",
+      "gather": "claude-haiku-5-5",
+      "draft": "claude-sonnet-5-5",
+      "verify": "claude-sonnet-5-5"
+    },
+    "draft_attempts": 1,
+    "tool_calls": [
+      {
+        "tool": "get_participant_summary",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_vitals",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_encounters",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_medication_changes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_immunizations",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "query": "chest pain angina nitroglycerin use",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "query": "inhaler shortness of breath cough oxygen saturation COPD"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "query": "bleeding bruising melena hemoglobin anemia iron"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "query": "depression mood anxiety PHQ cognitive screen MoCA caregiver"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "query": "pain score fibromyalgia sleep lipid HbA1c lab results"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "query": "confusion urinalysis medication review stove memory",
+          "since": "2026-11-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "query": "fall June 2026 IDT review"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "12daa29d-1ab3-e1da-43f3-f4ff64980e5f",
+          "query": "hemoglobin hematocrit HbA1c glucose lipid panel"
+        },
+        "by": "model"
+      }
+    ],
+    "llm_calls": 7,
+    "input_tokens": 37226,
+    "output_tokens": 7134,
+    "cost_usd": 0.0478,
+    "llm_seconds": 40.54,
+    "by_step": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0006
+      },
+      "gather": {
+        "calls": 4,
+        "cost_usd": 0.0046
+      },
+      "draft": {
+        "calls": 1,
+        "cost_usd": 0.0295
+      },
+      "verify": {
+        "calls": 1,
+        "cost_usd": 0.0132
+      }
+    },
+    "seconds": 40.6,
+    "trace": [
+      {
+        "type": "step",
+        "step": "plan",
+        "model": "claude-haiku-5-5",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "ok": true,
+        "summary": "age 74, 11 conditions, 5 medications",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "plan",
+        "checks": [
+          "Confirm the review window (2026-09-01 to 2026-11-30) and pull all encounters, ED visits, urgent care visits, and hospital admissions in that window, including any for chest pain, angina, COPD/bronchitis exacerbation, or anemia-related symptoms.",
+          "Falls and near-falls: check incident logs for any falls, fall-related injuries, or fear-of-falling reports, noting gait or balance concerns given knee osteoarthritis and chronic back pain.",
+          "Medication changes since last review: compare the active list (metoprolol succinate 100 mg, clopidogrel 75 mg, naproxen sodium 220 mg, nitroglycerin spray PRN, simvastatin 20 mg) against the prior list. Flag any new starts, dose changes, or stops, and any PRN nitroglycerin use.",
+          "Naproxen safety review: flag for team discussion the ongoing NSAID use alongside clopidogrel (bleeding risk) and in a patient with hypertension and ischemic heart disease. Check for GI bleeding signs, melena, bruising, and recent BP or renal lab trends. Do not recommend a change; surface for prescriber review.",
+          "Anemia and bleeding follow-up: review most recent hemoglobin/hematocrit trend, iron studies if on file, and any bleeding events, given anemia on problem list plus antiplatelet and NSAID exposure.",
+          "Cardiac and BP trend: review blood pressure readings across the window against prior values, heart rate on beta-blocker, any chest pain episodes, and nitroglycerin spray use frequency. Note whether lipid panel and statin follow-up are due.",
+          "COPD/bronchitis status: check respiratory symptoms, rescue inhaler use (none is on active med list, so verify whether inhaler or other respiratory therapy exists elsewhere), oxygen saturation readings, and any pulmonary visits or exacerbation treatments.",
+          "Weight and metabolic trend: review weight and BMI (obesity, metabolic syndrome, prediabetes), most recent HbA1c or glucose values, and any dietary or activity program participation.",
+          "Pain and function: review chronic pain, low back pain, and fibromyalgia scores, ADL/IADL status, mobility aids, and pain-related sleep or mood impact. Note that pain management currently relies on naproxen alone on the active list; check for any non-drug pain services referred.",
+          "Mood, cognition, caregiver, and care-plan items: screen for depression or anxiety changes and social engagement/attendance at PACE day programming, check caregiver or family changes, review any cognitive screen due, and list care-plan goals and assessments that are due or overdue before the 2026-11-30 review date."
+        ],
+        "t": 6.2,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "step",
+        "step": "gather",
+        "model": "claude-haiku-5-5",
+        "attempt": 1,
+        "t": 6.2,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "age 74, 11 conditions, 5 medications",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "15 notes",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "4 weights, weight -8.6%, 3 blood pressures, 0 high",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 encounters",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 started, 0 stopped",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "flu vaccine this season: yes",
+        "t": 8.5,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain angina nitroglycerin use",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain angina nitroglycerin use",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "inhaler shortness of breath cough oxygen saturation COPD"
+        },
+        "by": "model",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "inhaler shortness of breath cough oxygen saturation COPD"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "bleeding bruising melena hemoglobin anemia iron"
+        },
+        "by": "model",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "bleeding bruising melena hemoglobin anemia iron"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "depression mood anxiety PHQ cognitive screen MoCA caregiver"
+        },
+        "by": "model",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "depression mood anxiety PHQ cognitive screen MoCA caregiver"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "pain score fibromyalgia sleep lipid HbA1c lab results"
+        },
+        "by": "model",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "pain score fibromyalgia sleep lipid HbA1c lab results"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.6,
+        "cost_usd": 0.0024
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "confusion urinalysis medication review stove memory",
+          "since": "2026-11-01"
+        },
+        "by": "model",
+        "t": 14.8,
+        "cost_usd": 0.0035
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "confusion urinalysis medication review stove memory",
+          "since": "2026-11-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "2 matching notes (keyword search)",
+        "t": 14.8,
+        "cost_usd": 0.0035
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall June 2026 IDT review"
+        },
+        "by": "model",
+        "t": 14.8,
+        "cost_usd": 0.0035
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall June 2026 IDT review"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "5 matching notes (keyword search)",
+        "t": 14.8,
+        "cost_usd": 0.0035
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "hemoglobin hematocrit HbA1c glucose lipid panel"
+        },
+        "by": "model",
+        "t": 14.8,
+        "cost_usd": 0.0035
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "hemoglobin hematocrit HbA1c glucose lipid panel"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 14.8,
+        "cost_usd": 0.0035
+      },
+      {
+        "type": "step",
+        "step": "draft",
+        "model": "claude-sonnet-5-5",
+        "notes": 15,
+        "t": 21.3,
+        "cost_usd": 0.0052
+      },
+      {
+        "type": "draft",
+        "headline": "Roman has several concurrent changes this period: a documented fall (date now disputed), new evening confusion with a stove left on, 8.6% weight loss over about 12 weeks, and a decline in bathing and dressing independence.",
+        "items": [
+          {
+            "severity": "high",
+            "category": "fall",
+            "statement": "The RN documented a fall at home in the kitchen on 2026-10-19 while reaching for a cabinet. His niece Linda found him on the floor. He denied head strike and loss of consciousness, and had a small left forearm skin tear. Fall risk was reassessed as high and a PT referral was placed. A 2026-10-20 late entry says the fall actually occurred on 2026-06-18 and was discussed at the last IDT; this conflict is unresolved (see questions).",
+            "citations": [
+              "12daa29d-n001",
+              "12daa29d-n016"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "fall",
+            "statement": "PT evaluation on 2026-10-24 found slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommends a front-wheeled walker, a home safety evaluation and bathroom grab bars, and will see him twice weekly for strength and balance.",
+            "citations": [
+              "12daa29d-n002"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "cognition",
+            "statement": "On 2026-11-09 Linda reported about two weeks of increased evening confusion, including once leaving the stove on. Roman was oriented to person and place but not date, with no fever. The RN planned a urinalysis, medication review and PCP visit that week. No results or follow-up for these are in the evidence provided.",
+            "citations": [
+              "12daa29d-n004"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "weight_loss",
+            "statement": "Weight fell from 82.3 kg on 2026-09-05 to 75.2 kg on 2026-11-24, a loss of 7.1 kg (8.6%). Readings were 79.8 kg on 10-01 and 77.3 kg on 10-28. The dietitian notes poor appetite, skipped breakfasts and about 50% of day center lunches eaten. The plan is an oral supplement twice daily, weekly weights and a dental check for chewing problems.",
+            "citations": [
+              "12daa29d-n003",
+              "record:vitals"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "functional_status",
+            "statement": "On 2026-09-18 the home care aide gave hands-on help getting out of the tub, and Roman said he has been skipping showers for fear of slipping. On 2026-09-25 OT found he now needs moderate assistance with bathing and lower-body dressing, where he was independent at the last review. OT recommends a tub transfer bench, a handheld shower and more home care hours for bathing.",
+            "citations": [
+              "12daa29d-n005",
+              "12daa29d-n006"
+            ]
+          }
+        ],
+        "t": 35.5,
+        "cost_usd": 0.0346
+      },
+      {
+        "type": "step",
+        "step": "verify",
+        "model": "claude-sonnet-5-5",
+        "items": 5,
+        "t": 35.5,
+        "cost_usd": 0.0346
+      },
+      {
+        "type": "verdicts",
+        "attempt": 1,
+        "results": [
+          {
+            "index": 0,
+            "verdict": "supported",
+            "reason": "The statement reports the 10-19 fall as documented, and every detail matches the nursing note. It attributes the June 18 date to the 10-20 late entry and flags the conflict for the team instead of dropping the event.",
+            "statement": "The RN documented a fall at home in the kitchen on 2026-10-19 while reaching for a cabinet. His niece Linda found him on the floor. He denied head strike and loss of consciousness, and had a small left forearm skin tear. Fall risk was reassessed as high and a PT referral was placed. A 2026-10-20 late entry says the fall actually occurred on 2026-06-18 and was discussed at the last IDT; this conflict is unresolved (see questions)."
+          },
+          {
+            "index": 1,
+            "verdict": "supported",
+            "reason": "Gait, cane use, TUG of 19 seconds, the three recommendations and twice-weekly PT all match the PT evaluation.",
+            "statement": "PT evaluation on 2026-10-24 found slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommends a front-wheeled walker, a home safety evaluation and bathroom grab bars, and will see him twice weekly for strength and balance."
+          },
+          {
+            "index": 2,
+            "verdict": "supported",
+            "reason": "All details match the 11-09 nursing note. The statement correctly says no results or follow-up are in the evidence.",
+            "statement": "On 2026-11-09 Linda reported about two weeks of increased evening confusion, including once leaving the stove on. Roman was oriented to person and place but not date, with no fever. The RN planned a urinalysis, medication review and PCP visit that week. No results or follow-up for these are in the evidence provided."
+          },
+          {
+            "index": 3,
+            "verdict": "supported",
+            "reason": "The weights and the -7.1 kg (-8.6%) change match the vitals record. The dietitian's 9% is the same figure rounded. Appetite, breakfast, lunch intake and the plan match the nutrition note.",
+            "statement": "Weight fell from 82.3 kg on 2026-09-05 to 75.2 kg on 2026-11-24, a loss of 7.1 kg (8.6%). Readings were 79.8 kg on 10-01 and 77.3 kg on 10-28. The dietitian notes poor appetite, skipped breakfasts and about 50% of day center lunches eaten. The plan is an oral supplement twice daily, weekly weights and a dental check for chewing problems."
+          },
+          {
+            "index": 4,
+            "verdict": "supported",
+            "reason": "The aide note and the OT reassessment match on tub help, skipped showers, moderate assistance, prior independence and the three recommendations.",
+            "statement": "On 2026-09-18 the home care aide gave hands-on help getting out of the tub, and Roman said he has been skipping showers for fear of slipping. On 2026-09-25 OT found he now needs moderate assistance with bathing and lower-body dressing, where he was independent at the last review. OT recommends a tub transfer bench, a handheld shower and more home care hours for bathing."
+          }
+        ],
+        "retry": false,
+        "t": 40.6,
+        "cost_usd": 0.0478
+      },
+      {
+        "type": "step",
+        "step": "finalize",
+        "kept": 5,
+        "removed": 0,
+        "t": 40.6,
+        "cost_usd": 0.0478
+      }
+    ]
+  }
+}

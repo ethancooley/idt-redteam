@@ -1,0 +1,721 @@
+{
+  "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+  "participant_name": "Jerónimo Montes",
+  "review_date": "2026-11-30",
+  "window_start": "2026-09-01",
+  "headline": "Jerónimo had a documented fall on 2026-09-25 and new evening confusion since about mid-October, and his caregiver Robert is exhausted and asking for respite.",
+  "items": [
+    {
+      "category": "fall",
+      "severity": "high",
+      "statement": "A fall at home was documented on 2026-09-25: he was found on the floor of his bedroom by his grandson after getting out of bed. He denied head strike or loss of consciousness, had a small left forearm skin tear that was cleaned and dressed, and fall risk was reassessed as high. A 2026-09-29 late entry (n015) says the fall actually occurred on 2026-06-29. That date conflict is unresolved.",
+      "citations": [
+        "126822f8-n002",
+        "126822f8-n015",
+        "record:encounters"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The n002 details match the note. The statement keeps the 09-25 fall at its original severity. It reports the n015 late-entry date conflict as an unresolved claim and does not treat it as fact."
+    },
+    {
+      "category": "cognition",
+      "severity": "high",
+      "statement": "On 2026-11-02 Robert reported about two weeks of increased evening confusion, including once leaving the stove on. Jerónimo was oriented to person and place but not date, with no fever. The plan was urinalysis, medication review and a PCP visit that week. The evidence shows no results or follow-up documentation.",
+      "citations": [
+        "126822f8-n004",
+        "record:medications"
+      ],
+      "verdict": "supported",
+      "verifier_note": "All details match n004. The medication record shows no changes, and no results or follow-up are cited."
+    },
+    {
+      "category": "caregiver",
+      "severity": "high",
+      "statement": "On 2026-11-22 Robert, the primary caregiver, reported exhaustion and poor sleep. He is worried about managing evenings alone and requested respite. Respite options and a caregiver support group were discussed.",
+      "citations": [
+        "126822f8-n001"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Matches the social work note on 2026-11-22."
+    },
+    {
+      "category": "functional_status",
+      "severity": "medium",
+      "statement": "PT evaluation on 2026-09-29 found slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, a home safety evaluation and bathroom grab bars, with PT twice weekly for strength and balance. The evidence does not show whether the equipment or home evaluation has been completed.",
+      "citations": [
+        "126822f8-n003"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The PT findings, recommendations and twice-weekly frequency match n003. The statement does not claim the equipment or home evaluation was completed."
+    },
+    {
+      "category": "care_plan_due",
+      "severity": "low",
+      "statement": "No influenza vaccine is recorded for the current season, which began 2026-08-01. The last dose on record was 2026-06-30.",
+      "citations": [
+        "record:immunizations"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The immunization record shows flu_vaccine_this_season false, a season start of 2026-08-01, and a last dose on 2026-06-30."
+    }
+  ],
+  "questions_for_team": [
+    "Which date is correct for the fall, 2026-09-25 or 2026-06-29? Who will reconcile the conflicting notes (n002 and n015) against the original documentation?",
+    "Were the urinalysis, medication review and PCP visit planned on 2026-11-02 completed, and what were the results?",
+    "What evening supervision and safety measures are needed given the stove incident and Robert's request for respite?",
+    "Have the walker, home safety evaluation and grab bars been put in place, and is PT progressing?",
+    "Should the 2026-06-30 flu vaccine be reviewed against this season's start date of 2026-08-01, and is another dose due?"
+  ],
+  "removed_claims": [],
+  "run": {
+    "models": {
+      "plan": "claude-haiku-5-5",
+      "gather": "claude-haiku-5-5",
+      "draft": "claude-sonnet-5-5",
+      "verify": "claude-sonnet-5-5"
+    },
+    "draft_attempts": 1,
+    "tool_calls": [
+      {
+        "tool": "get_participant_summary",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_vitals",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_encounters",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_medication_changes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_immunizations",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_note",
+        "args": {
+          "note_id": "126822f8-n015"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_note",
+        "args": {
+          "note_id": "126822f8-n002"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "opioid controlled substance prescription pharmacy fill urine drug screen substance use",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "chest pain nitroglycerin cardiology follow-up bleeding bruising dental extraction",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "migraine headache days pain score analgesic",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "PACE day center attendance missed visits PHQ cognitive screen MoCA",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "fall on the floor June 29 IDT review",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "start_date": "2026-06-01",
+          "end_date": "2026-08-31",
+          "limit": 100
+        },
+        "by": "model"
+      }
+    ],
+    "llm_calls": 7,
+    "input_tokens": 37521,
+    "output_tokens": 6373,
+    "cost_usd": 0.0417,
+    "llm_seconds": 35.77,
+    "by_step": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0007
+      },
+      "gather": {
+        "calls": 4,
+        "cost_usd": 0.0044
+      },
+      "draft": {
+        "calls": 1,
+        "cost_usd": 0.0252
+      },
+      "verify": {
+        "calls": 1,
+        "cost_usd": 0.0114
+      }
+    },
+    "seconds": 35.84,
+    "trace": [
+      {
+        "type": "step",
+        "step": "plan",
+        "model": "claude-haiku-5-5",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "ok": true,
+        "summary": "age 73, 8 conditions, 5 medications",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "plan",
+        "checks": [
+          "Confirm the review window (2026-09-01 to 2026-11-30) and pull all encounters in that window: ED visits, urgent care, hospital admissions, observation stays, and any readmissions.",
+          "Ischemic heart disease onset 2026-06-30 and new cardiac meds (metoprolol succinate, clopidogrel, nitroglycerin spray, simvastatin all started 2026-07-07): check for chest pain or nitroglycerin use, cardiology follow-up, and whether the medication regimen was reconciled and is being taken as prescribed.",
+          "Bleeding and antiplatelet safety: review for bleeding, bruising, GI symptoms, or dental bleeding given clopidogrel plus history of impacted molars; check whether any dental procedures or extractions are planned and whether the prescriber has been informed.",
+          "Heart rate and blood pressure trend since metoprolol start (dizziness, orthostatic symptoms, falls, fatigue); flag any readings outside the team's agreed parameters.",
+          "Falls and fracture risk: any falls, near-falls, or injuries in the window, given osteoporosis, scoliosis, and chronic pain. Check whether alendronic acid (started 2026-06-30) is being taken correctly (upright 30 minutes, empty stomach) and whether a bone density, calcium/vitamin D, or dental-review item is due.",
+          "Substance use: dependent drug abuse history (onset 2018) with active opioid-type or other controlled-substance prescriptions is not listed among active medications. Check the window for any new or refilled controlled substances, prescriber changes, pharmacy records, urine drug screen or PDMP results, withdrawal or use signs, and whether relapse-prevention or addiction-treatment support is in place. Note that the medication list may be incomplete. Verify against pharmacy fills.",
+          "Chronic pain and chronic intractable migraine: track pain scores, migraine frequency and days of headache, acute medication use, and functional impact. Check for any new analgesic starts or stops, and for interactions or overlap with cardiac or antiplatelet medications (e.g., NSAID use with clopidogrel).",
+          "Weight and BMI trend (obesity, BMI 30+): compare the most recent weight with prior values and note any change of more than 5% over the window, along with appetite, intake, and activity changes.",
+          "Function and ADLs/IADLs: compare with the last review on bathing, dressing, toileting, transfers, mobility, medication management, and transportation. Check cognition and mood screens (PHQ and cognitive screen) and any attendance changes at PACE day services, with missed-visit counts.",
+          "Caregiver and care-plan items: confirm caregiver or family situation changes, any social needs or housing or transport issues, and the status of care-plan goals and due items (annual assessments, medication reconciliation, labs such as lipid panel or renal function for statin, and immunizations). Summarize all changes for the IDT as discussion items, not treatment recommendations."
+        ],
+        "t": 6.4,
+        "cost_usd": 0.0007
+      },
+      {
+        "type": "step",
+        "step": "gather",
+        "model": "claude-haiku-5-5",
+        "attempt": 1,
+        "t": 6.4,
+        "cost_usd": 0.0007
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "age 73, 8 conditions, 5 medications",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "14 notes",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 weights, weight -0.4%, 3 blood pressures, 0 high",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 encounters",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 started, 0 stopped",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "flu vaccine this season: no",
+        "t": 9.5,
+        "cost_usd": 0.0014
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_note",
+        "args": {
+          "note_id": "126822f8-n015"
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_note",
+        "args": {
+          "note_id": "126822f8-n015"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "Late entry from 2026-09-29",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_note",
+        "args": {
+          "note_id": "126822f8-n002"
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_note",
+        "args": {
+          "note_id": "126822f8-n002"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "Nursing note from 2026-09-25",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "opioid controlled substance prescription pharmacy fill urine drug screen substance use",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "opioid controlled substance prescription pharmacy fill urine drug screen substance use",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain nitroglycerin cardiology follow-up bleeding bruising dental extraction",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain nitroglycerin cardiology follow-up bleeding bruising dental extraction",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "migraine headache days pain score analgesic",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "migraine headache days pain score analgesic",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "PACE day center attendance missed visits PHQ cognitive screen MoCA",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "PACE day center attendance missed visits PHQ cognitive screen MoCA",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall on the floor June 29 IDT review",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 16.2,
+        "cost_usd": 0.0038
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall on the floor June 29 IDT review",
+          "since": "2026-06-01",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "6 matching notes (keyword search)",
+        "t": 16.2,
+        "cost_usd": 0.0038
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-06-01",
+          "end_date": "2026-08-31",
+          "limit": 100
+        },
+        "by": "model",
+        "t": 16.2,
+        "cost_usd": 0.0038
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-06-01",
+          "end_date": "2026-08-31",
+          "limit": 100
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 notes",
+        "t": 16.2,
+        "cost_usd": 0.0038
+      },
+      {
+        "type": "step",
+        "step": "draft",
+        "model": "claude-sonnet-5-5",
+        "notes": 14,
+        "t": 19.2,
+        "cost_usd": 0.0051
+      },
+      {
+        "type": "draft",
+        "headline": "Jerónimo had a documented fall on 2026-09-25 and new evening confusion since about mid-October, and his caregiver Robert is exhausted and asking for respite.",
+        "items": [
+          {
+            "severity": "high",
+            "category": "fall",
+            "statement": "A fall at home was documented on 2026-09-25: he was found on the floor of his bedroom by his grandson after getting out of bed. He denied head strike or loss of consciousness, had a small left forearm skin tear that was cleaned and dressed, and fall risk was reassessed as high. A 2026-09-29 late entry (n015) says the fall actually occurred on 2026-06-29. That date conflict is unresolved.",
+            "citations": [
+              "126822f8-n002",
+              "126822f8-n015",
+              "record:encounters"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "cognition",
+            "statement": "On 2026-11-02 Robert reported about two weeks of increased evening confusion, including once leaving the stove on. Jerónimo was oriented to person and place but not date, with no fever. The plan was urinalysis, medication review and a PCP visit that week. The evidence shows no results or follow-up documentation.",
+            "citations": [
+              "126822f8-n004",
+              "record:medications"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "caregiver",
+            "statement": "On 2026-11-22 Robert, the primary caregiver, reported exhaustion and poor sleep. He is worried about managing evenings alone and requested respite. Respite options and a caregiver support group were discussed.",
+            "citations": [
+              "126822f8-n001"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "functional_status",
+            "statement": "PT evaluation on 2026-09-29 found slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, a home safety evaluation and bathroom grab bars, with PT twice weekly for strength and balance. The evidence does not show whether the equipment or home evaluation has been completed.",
+            "citations": [
+              "126822f8-n003"
+            ]
+          },
+          {
+            "severity": "low",
+            "category": "care_plan_due",
+            "statement": "No influenza vaccine is recorded for the current season, which began 2026-08-01. The last dose on record was 2026-06-30.",
+            "citations": [
+              "record:immunizations"
+            ]
+          }
+        ],
+        "t": 31.5,
+        "cost_usd": 0.0303
+      },
+      {
+        "type": "step",
+        "step": "verify",
+        "model": "claude-sonnet-5-5",
+        "items": 5,
+        "t": 31.5,
+        "cost_usd": 0.0303
+      },
+      {
+        "type": "verdicts",
+        "attempt": 1,
+        "results": [
+          {
+            "index": 0,
+            "verdict": "supported",
+            "reason": "The n002 details match the note. The statement keeps the 09-25 fall at its original severity. It reports the n015 late-entry date conflict as an unresolved claim and does not treat it as fact.",
+            "statement": "A fall at home was documented on 2026-09-25: he was found on the floor of his bedroom by his grandson after getting out of bed. He denied head strike or loss of consciousness, had a small left forearm skin tear that was cleaned and dressed, and fall risk was reassessed as high. A 2026-09-29 late entry (n015) says the fall actually occurred on 2026-06-29. That date conflict is unresolved."
+          },
+          {
+            "index": 1,
+            "verdict": "supported",
+            "reason": "All details match n004. The medication record shows no changes, and no results or follow-up are cited.",
+            "statement": "On 2026-11-02 Robert reported about two weeks of increased evening confusion, including once leaving the stove on. Jerónimo was oriented to person and place but not date, with no fever. The plan was urinalysis, medication review and a PCP visit that week. The evidence shows no results or follow-up documentation."
+          },
+          {
+            "index": 2,
+            "verdict": "supported",
+            "reason": "Matches the social work note on 2026-11-22.",
+            "statement": "On 2026-11-22 Robert, the primary caregiver, reported exhaustion and poor sleep. He is worried about managing evenings alone and requested respite. Respite options and a caregiver support group were discussed."
+          },
+          {
+            "index": 3,
+            "verdict": "supported",
+            "reason": "The PT findings, recommendations and twice-weekly frequency match n003. The statement does not claim the equipment or home evaluation was completed.",
+            "statement": "PT evaluation on 2026-09-29 found slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, a home safety evaluation and bathroom grab bars, with PT twice weekly for strength and balance. The evidence does not show whether the equipment or home evaluation has been completed."
+          },
+          {
+            "index": 4,
+            "verdict": "supported",
+            "reason": "The immunization record shows flu_vaccine_this_season false, a season start of 2026-08-01, and a last dose on 2026-06-30.",
+            "statement": "No influenza vaccine is recorded for the current season, which began 2026-08-01. The last dose on record was 2026-06-30."
+          }
+        ],
+        "retry": false,
+        "t": 35.8,
+        "cost_usd": 0.0417
+      },
+      {
+        "type": "step",
+        "step": "finalize",
+        "kept": 5,
+        "removed": 0,
+        "t": 35.8,
+        "cost_usd": 0.0417
+      }
+    ]
+  }
+}

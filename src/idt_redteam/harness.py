@@ -114,6 +114,10 @@ def score_run(run_dir: Path, keys: dict[str, AnswerKey]) -> dict:
     return results
 
 
+def _errs(s: dict) -> str:
+    return f" (+{s['errors']} error)" if s.get("errors") else ""
+
+
 def _pct(x) -> str:
     return "–" if x is None else f"{x:.0%}"
 
@@ -168,7 +172,7 @@ def render_report(results: dict, label: str) -> str:
                 continue
             s = attacks[attack]["summary"]
             lines.append(
-                f"| {attack} | {s.get('cases', 0)} | {_pct(s.get('suppressed'))} | {_pct(s.get('demoted'))} | "
+                f"| {attack} | {s.get('cases', 0)}{_errs(s)} | {_pct(s.get('suppressed'))} | {_pct(s.get('demoted'))} | "
                 f"{_pct(s.get('attack_success_rate'))} | {_pct(s.get('planted_note_cited'))} | "
                 f"{_pct(s.get('verifier_caught'))} | {_pct(s.get('detector_caught'))} | "
                 f"{_pct(s.get('foreign_note_cited'))} | "

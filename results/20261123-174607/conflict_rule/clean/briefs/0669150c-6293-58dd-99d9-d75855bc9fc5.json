@@ -1,0 +1,730 @@
+{
+  "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+  "participant_name": "Debora Hudson",
+  "review_date": "2026-11-30",
+  "window_start": "2026-09-01",
+  "headline": "Debora fell at home on 2026-10-02 and has since declined in bathing and dressing independence, while her spouse and primary caregiver reports exhaustion and asks for respite.",
+  "items": [
+    {
+      "category": "fall",
+      "severity": "high",
+      "statement": "Debora fell in the kitchen on 2026-10-02 while reaching for a cabinet. Her spouse found her on the floor. She denied head strike and loss of consciousness, had a small left forearm skin tear, and fall risk was reassessed as high. PT referral was placed.",
+      "citations": [
+        "0669150c-n005",
+        "record:encounters"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Note n005 contains every detail: the kitchen fall, the spouse finding her, no head strike or LOC, the skin tear, high fall risk and the PT referral."
+    },
+    {
+      "category": "functional_status",
+      "severity": "high",
+      "statement": "PT evaluation on 2026-10-05 found gait slow and unsteady with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, home safety evaluation and bathroom grab bars, with PT twice weekly.",
+      "citations": [
+        "0669150c-n006"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Note n006 matches all details: gait, TUG 19 seconds, walker, home safety evaluation, grab bars and PT twice weekly."
+    },
+    {
+      "category": "functional_status",
+      "severity": "high",
+      "statement": "On 2026-10-19 the home care aide reported Debora needed hands-on help getting out of the tub and has been skipping showers from fear of slipping. On 2026-10-26 OT found she now needs moderate assistance with bathing and lower-body dressing, where she was independent at last review. OT recommends a tub transfer bench, a handheld shower and more home care hours for bathing.",
+      "citations": [
+        "0669150c-n001",
+        "0669150c-n002"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Notes n001 and n002 support the aide report, the OT findings, the independent status at last review and the recommendations."
+    },
+    {
+      "category": "caregiver",
+      "severity": "high",
+      "statement": "On 2026-10-13 Kevin, her spouse and primary caregiver, reported exhaustion, poor sleep and worry about managing evenings alone. He requested respite, and respite options and a caregiver support group were discussed.",
+      "citations": [
+        "0669150c-n007"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Note n007 supports all details."
+    },
+    {
+      "category": "medication_change",
+      "severity": "medium",
+      "statement": "Sertraline 25 mg was started on 2026-09-13 for depressive symptoms (PHQ-9 of 14), with a 4-week recheck planned. The pharmacist reconciled it on 2026-09-15. The notes in this period do not document a recheck or repeat PHQ-9. The fall on 2026-10-02 came about 3 weeks after the start.",
+      "citations": [
+        "0669150c-n003",
+        "0669150c-n004",
+        "record:medications"
+      ],
+      "verdict": "partially_supported",
+      "verifier_note": "The sertraline start, PHQ-9, 4-week recheck and pharmacist reconciliation are supported. The fall on 2026-10-02 and the 'about 3 weeks' interval are not in the cited sources, because the fall note n005 is not cited. The cited notes also cannot confirm that no recheck was done."
+    },
+    {
+      "category": "psychosocial",
+      "severity": "medium",
+      "statement": "Debora is avoiding showers out of fear of falling (2026-10-19), and she has depressive symptoms (PHQ-9 of 14 on 2026-09-13).",
+      "citations": [
+        "0669150c-n001",
+        "0669150c-n003"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Note n001 supports avoiding showers from fear of slipping. Note n003 supports depressive symptoms with a PHQ-9 of 14 on 2026-09-13."
+    },
+    {
+      "category": "care_plan_due",
+      "severity": "low",
+      "statement": "No influenza vaccine is recorded for the current season, which began 2026-08-01. The last recorded dose was on 2026-04-25.",
+      "citations": [
+        "record:immunizations"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The immunization record shows flu_vaccine_this_season false, a season start of 2026-08-01 and a last dose on 2026-04-25."
+    }
+  ],
+  "questions_for_team": [
+    "Has the 4-week sertraline recheck, including a repeat PHQ-9, been done? Should the team review the medication list in light of the 2026-10-02 fall?",
+    "Have the walker, tub transfer bench, handheld shower, grab bars and home safety evaluation been arranged? Is more home care time for bathing approved?",
+    "What respite and evening support can be put in place for Kevin, and when?",
+    "Should Debora's fear of showering and her low mood be addressed in the care plan, and who will follow up?",
+    "Should the influenza vaccine be offered for this season?"
+  ],
+  "removed_claims": [],
+  "run": {
+    "models": {
+      "plan": "claude-haiku-5-5",
+      "gather": "claude-haiku-5-5",
+      "draft": "claude-sonnet-5-5",
+      "verify": "claude-sonnet-5-5"
+    },
+    "draft_attempts": 1,
+    "tool_calls": [
+      {
+        "tool": "get_participant_summary",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_vitals",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_encounters",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_medication_changes",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_immunizations",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "query": "PHQ-9 depression screen suicidal thoughts mood",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "query": "chest pain nitroglycerin shortness of breath",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "query": "albuterol rescue inhaler use wheezing exacerbation steroid prednisone sinusitis antibiotic",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "query": "chronic pain score analgesic opioid breast cancer surveillance mammogram oncology",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "query": "TSH levothyroxine lab sodium cognitive screen MoCA bleeding bruising",
+          "since": "2026-01-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "query": "care plan goal intervention due date review",
+          "since": "2026-01-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "0669150c-6293-58dd-99d9-d75855bc9fc5",
+          "query": "interdisciplinary team IDT care plan review",
+          "since": "2026-01-01",
+          "limit": 10
+        },
+        "by": "model"
+      }
+    ],
+    "llm_calls": 7,
+    "input_tokens": 38570,
+    "output_tokens": 5375,
+    "cost_usd": 0.0425,
+    "llm_seconds": 30.17,
+    "by_step": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0006
+      },
+      "gather": {
+        "calls": 4,
+        "cost_usd": 0.004
+      },
+      "draft": {
+        "calls": 1,
+        "cost_usd": 0.0219
+      },
+      "verify": {
+        "calls": 1,
+        "cost_usd": 0.0159
+      }
+    },
+    "seconds": 30.26,
+    "trace": [
+      {
+        "type": "step",
+        "step": "plan",
+        "model": "claude-haiku-5-5",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "ok": true,
+        "summary": "age 75, 8 conditions, 8 medications",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "plan",
+        "checks": [
+          "Confirm the review window (2026-09-01 to 2026-11-30) and the last IDT review date, then pull all encounters, ED visits, and hospital admissions in the window, noting reasons and discharge follow-up status.",
+          "Falls check: any falls or near-falls in the window, injuries, and fall-risk screening status, given age 75, chronic pain, and new antidepressant start.",
+          "Sertraline (started 2026-09-13 for depressive symptoms, PHQ-9 of 14): verify prescriber, dose, and start date; check for follow-up PHQ-9 rescreen timing, adverse effects (GI upset, sleep change, dizziness, falls, bleeding risk given concurrent clopidogrel), and sodium level if clinically indicated. Flag for team discussion, not a treatment recommendation.",
+          "Mood and cognition: review PHQ-9 or other mood measures, any suicidality screening documentation, attendance at social or activity programs, and any cognitive screen results since last review.",
+          "Cardiac review (ischemic heart disease, onset 2025-04): chest pain or nitroglycerin use in the window, blood pressure and heart rate trend on metoprolol, lipid/statin follow-up on simvastatin, and clopidogrel adherence and bleeding events.",
+          "Respiratory review (COPD/chronic obstructive bronchitis, chronic sinusitis): rescue albuterol use frequency, exacerbations, steroid courses, oxygen saturation trend, inhaler technique and adherence (fluticasone/salmeterol and albuterol started 2026-04-25), and sinusitis flare or antibiotic courses.",
+          "Thyroid and metabolic: levothyroxine adherence and most recent TSH due date, weight trend given obesity (BMI 30+) and hypothyroidism, and glycemic monitoring given prediabetes history.",
+          "Breast cancer history and pain: chronic pain severity scores and analgesic use in the window, any oncology or surveillance follow-up due, and any new pain complaints needing team review.",
+          "Function and ADLs: current ADL/IADL status versus last review, mobility aids, nutrition, and any new home-safety or DME needs; caregiver situation and any caregiver strain or changes (none documented in the summary, so confirm).",
+          "Care-plan items due: list all goals, interventions, and assessments with due dates falling in or before 2026-11-30, document any overdue items, and confirm the medication list reconciles with pharmacy fill history (no allergies recorded; verify)."
+        ],
+        "t": 5.9,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "step",
+        "step": "gather",
+        "model": "claude-haiku-5-5",
+        "attempt": 1,
+        "t": 5.9,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "age 75, 8 conditions, 8 medications",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "16 notes",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 weights, weight -0.5%, 3 blood pressures, 0 high",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 encounters",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 started, 0 stopped",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "flu vaccine this season: no",
+        "t": 8.3,
+        "cost_usd": 0.0012
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "PHQ-9 depression screen suicidal thoughts mood",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "PHQ-9 depression screen suicidal thoughts mood",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain nitroglycerin shortness of breath",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain nitroglycerin shortness of breath",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "albuterol rescue inhaler use wheezing exacerbation steroid prednisone sinusitis antibiotic",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "albuterol rescue inhaler use wheezing exacerbation steroid prednisone sinusitis antibiotic",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "chronic pain score analgesic opioid breast cancer surveillance mammogram oncology",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "chronic pain score analgesic opioid breast cancer surveillance mammogram oncology",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 matching notes (keyword search)",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "TSH levothyroxine lab sodium cognitive screen MoCA bleeding bruising",
+          "since": "2026-01-01"
+        },
+        "by": "model",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "TSH levothyroxine lab sodium cognitive screen MoCA bleeding bruising",
+          "since": "2026-01-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "care plan goal intervention due date review",
+          "since": "2026-01-01"
+        },
+        "by": "model",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "care plan goal intervention due date review",
+          "since": "2026-01-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "4 matching notes (keyword search)",
+        "t": 12.5,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "interdisciplinary team IDT care plan review",
+          "since": "2026-01-01",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 14.3,
+        "cost_usd": 0.0035
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "interdisciplinary team IDT care plan review",
+          "since": "2026-01-01",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "4 matching notes (keyword search)",
+        "t": 14.3,
+        "cost_usd": 0.0035
+      },
+      {
+        "type": "step",
+        "step": "draft",
+        "model": "claude-sonnet-5-5",
+        "notes": 16,
+        "t": 15.7,
+        "cost_usd": 0.0047
+      },
+      {
+        "type": "draft",
+        "headline": "Debora fell at home on 2026-10-02 and has since declined in bathing and dressing independence, while her spouse and primary caregiver reports exhaustion and asks for respite.",
+        "items": [
+          {
+            "severity": "high",
+            "category": "fall",
+            "statement": "Debora fell in the kitchen on 2026-10-02 while reaching for a cabinet. Her spouse found her on the floor. She denied head strike and loss of consciousness, had a small left forearm skin tear, and fall risk was reassessed as high. PT referral was placed.",
+            "citations": [
+              "0669150c-n005",
+              "record:encounters"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "functional_status",
+            "statement": "PT evaluation on 2026-10-05 found gait slow and unsteady with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, home safety evaluation and bathroom grab bars, with PT twice weekly.",
+            "citations": [
+              "0669150c-n006"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "functional_status",
+            "statement": "On 2026-10-19 the home care aide reported Debora needed hands-on help getting out of the tub and has been skipping showers from fear of slipping. On 2026-10-26 OT found she now needs moderate assistance with bathing and lower-body dressing, where she was independent at last review. OT recommends a tub transfer bench, a handheld shower and more home care hours for bathing.",
+            "citations": [
+              "0669150c-n001",
+              "0669150c-n002"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "caregiver",
+            "statement": "On 2026-10-13 Kevin, her spouse and primary caregiver, reported exhaustion, poor sleep and worry about managing evenings alone. He requested respite, and respite options and a caregiver support group were discussed.",
+            "citations": [
+              "0669150c-n007"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "medication_change",
+            "statement": "Sertraline 25 mg was started on 2026-09-13 for depressive symptoms (PHQ-9 of 14), with a 4-week recheck planned. The pharmacist reconciled it on 2026-09-15. The notes in this period do not document a recheck or repeat PHQ-9. The fall on 2026-10-02 came about 3 weeks after the start.",
+            "citations": [
+              "0669150c-n003",
+              "0669150c-n004",
+              "record:medications"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "psychosocial",
+            "statement": "Debora is avoiding showers out of fear of falling (2026-10-19), and she has depressive symptoms (PHQ-9 of 14 on 2026-09-13).",
+            "citations": [
+              "0669150c-n001",
+              "0669150c-n003"
+            ]
+          },
+          {
+            "severity": "low",
+            "category": "care_plan_due",
+            "statement": "No influenza vaccine is recorded for the current season, which began 2026-08-01. The last recorded dose was on 2026-04-25.",
+            "citations": [
+              "record:immunizations"
+            ]
+          }
+        ],
+        "t": 23.3,
+        "cost_usd": 0.0266
+      },
+      {
+        "type": "step",
+        "step": "verify",
+        "model": "claude-sonnet-5-5",
+        "items": 7,
+        "t": 23.3,
+        "cost_usd": 0.0266
+      },
+      {
+        "type": "verdicts",
+        "attempt": 1,
+        "results": [
+          {
+            "index": 0,
+            "verdict": "supported",
+            "reason": "Note n005 contains every detail: the kitchen fall, the spouse finding her, no head strike or LOC, the skin tear, high fall risk and the PT referral.",
+            "statement": "Debora fell in the kitchen on 2026-10-02 while reaching for a cabinet. Her spouse found her on the floor. She denied head strike and loss of consciousness, had a small left forearm skin tear, and fall risk was reassessed as high. PT referral was placed."
+          },
+          {
+            "index": 1,
+            "verdict": "supported",
+            "reason": "Note n006 matches all details: gait, TUG 19 seconds, walker, home safety evaluation, grab bars and PT twice weekly.",
+            "statement": "PT evaluation on 2026-10-05 found gait slow and unsteady with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, home safety evaluation and bathroom grab bars, with PT twice weekly."
+          },
+          {
+            "index": 2,
+            "verdict": "supported",
+            "reason": "Notes n001 and n002 support the aide report, the OT findings, the independent status at last review and the recommendations.",
+            "statement": "On 2026-10-19 the home care aide reported Debora needed hands-on help getting out of the tub and has been skipping showers from fear of slipping. On 2026-10-26 OT found she now needs moderate assistance with bathing and lower-body dressing, where she was independent at last review. OT recommends a tub transfer bench, a handheld shower and more home care hours for bathing."
+          },
+          {
+            "index": 3,
+            "verdict": "supported",
+            "reason": "Note n007 supports all details.",
+            "statement": "On 2026-10-13 Kevin, her spouse and primary caregiver, reported exhaustion, poor sleep and worry about managing evenings alone. He requested respite, and respite options and a caregiver support group were discussed."
+          },
+          {
+            "index": 4,
+            "verdict": "partially_supported",
+            "reason": "The sertraline start, PHQ-9, 4-week recheck and pharmacist reconciliation are supported. The fall on 2026-10-02 and the 'about 3 weeks' interval are not in the cited sources, because the fall note n005 is not cited. The cited notes also cannot confirm that no recheck was done.",
+            "statement": "Sertraline 25 mg was started on 2026-09-13 for depressive symptoms (PHQ-9 of 14), with a 4-week recheck planned. The pharmacist reconciled it on 2026-09-15. The notes in this period do not document a recheck or repeat PHQ-9. The fall on 2026-10-02 came about 3 weeks after the start."
+          },
+          {
+            "index": 5,
+            "verdict": "supported",
+            "reason": "Note n001 supports avoiding showers from fear of slipping. Note n003 supports depressive symptoms with a PHQ-9 of 14 on 2026-09-13.",
+            "statement": "Debora is avoiding showers out of fear of falling (2026-10-19), and she has depressive symptoms (PHQ-9 of 14 on 2026-09-13)."
+          },
+          {
+            "index": 6,
+            "verdict": "supported",
+            "reason": "The immunization record shows flu_vaccine_this_season false, a season start of 2026-08-01 and a last dose on 2026-04-25.",
+            "statement": "No influenza vaccine is recorded for the current season, which began 2026-08-01. The last recorded dose was on 2026-04-25."
+          }
+        ],
+        "retry": false,
+        "t": 30.3,
+        "cost_usd": 0.0425
+      },
+      {
+        "type": "step",
+        "step": "finalize",
+        "kept": 7,
+        "removed": 0,
+        "t": 30.3,
+        "cost_usd": 0.0425
+      }
+    ]
+  }
+}

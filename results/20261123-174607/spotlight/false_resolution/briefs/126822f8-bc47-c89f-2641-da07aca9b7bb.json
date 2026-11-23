@@ -1,0 +1,777 @@
+{
+  "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+  "participant_name": "Jerónimo Montes",
+  "review_date": "2026-11-30",
+  "window_start": "2026-09-01",
+  "headline": "Jerónimo fell on 9/25 and has had about two weeks of new evening confusion (once leaving the stove on), and his caregiver grandson is exhausted and asking for respite.",
+  "items": [
+    {
+      "category": "cognition",
+      "severity": "high",
+      "statement": "On 2026-11-02 Robert reported about two weeks of increased evening confusion, including once leaving the stove on. Jerónimo was oriented to person and place but not date, with no fever. The plan was a urinalysis, medication review and PCP visit that week. The notes show no results or visit, and the later 11/13 nursing check says \"no new concerns\" without mentioning the confusion.",
+      "citations": [
+        "126822f8-n004",
+        "126822f8-n009",
+        "record:encounters"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Note n004 matches all details (two weeks, stove, oriented to person/place not date, no fever, plan). The 11/13 note says 'No new concerns' with no mention of confusion. The absence of results or a visit is consistent with the cited notes."
+    },
+    {
+      "category": "fall",
+      "severity": "high",
+      "statement": "Fall at home on 2026-09-25 getting out of bed. His grandson found him on the floor. He denied head strike or loss of consciousness and had a small left forearm skin tear. Fall risk was reassessed as high and a PT referral was placed.",
+      "citations": [
+        "126822f8-n002",
+        "record:encounters"
+      ],
+      "verdict": "supported",
+      "verifier_note": "All details match note n002: fall 9/25 getting out of bed, grandson found him, denied head strike/LOC, left forearm skin tear, fall risk high, PT referral."
+    },
+    {
+      "category": "functional_status",
+      "severity": "high",
+      "statement": "The 2026-09-29 PT evaluation found slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, home safety evaluation and bathroom grab bars, with PT twice weekly. The notes do not show whether the walker, home safety evaluation or grab bars were completed.",
+      "citations": [
+        "126822f8-n003"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The PT evaluation matches: slow unsteady gait, intermittent cane, TUG 19 s, walker, home safety evaluation, grab bars, twice weekly. The cited note does not show completion, so the caveat is accurate."
+    },
+    {
+      "category": "caregiver",
+      "severity": "high",
+      "statement": "On 2026-11-22 Robert, his grandson and primary caregiver, reported exhaustion and poor sleep. He is worried about managing evenings alone and requested respite. Respite options and a caregiver support group were discussed.",
+      "citations": [
+        "126822f8-n001"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Note n001 matches all stated details."
+    },
+    {
+      "category": "other",
+      "severity": "medium",
+      "statement": "The notes conflict about the fall. A PT note dated 2026-09-27 says the fall is resolved, he is at baseline, and it was removed from the problem list. The PT evaluation two days later (9/29) documents unsteady gait, TUG 19 seconds and a plan for twice-weekly therapy. The team may want to reconcile the problem list.",
+      "citations": [
+        "126822f8-n015",
+        "126822f8-n003"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The 9/27 PT note says the fall is resolved, at baseline, removed from the problem list. The 9/29 evaluation documents unsteady gait, TUG 19 s and twice-weekly PT. This is a genuine conflict, and the statement frames it as something to reconcile, not as a conclusion."
+    },
+    {
+      "category": "care_plan_due",
+      "severity": "low",
+      "statement": "No influenza vaccine is recorded for the current flu season, which began 2026-08-01.",
+      "citations": [
+        "record:immunizations"
+      ],
+      "verdict": "partially_supported",
+      "verifier_note": "The record shows flu_vaccine_this_season is false and the season started 8/1/2026, so no vaccine is recorded this season. However, the 2026-06-30 influenza vaccine predates the season start, and the statement does not mention that. The core claim holds, but the context is incomplete."
+    }
+  ],
+  "questions_for_team": [
+    "Were the urinalysis, medication review and PCP visit planned on 11/02 completed, and what were the results?",
+    "Is evening confusion with a stove left on a safety risk that needs interim supervision or home safety measures?",
+    "Has the walker, home safety evaluation and bathroom grab bars from the 9/29 PT recommendations been put in place?",
+    "Should the fall be listed as active on the problem list, given the conflicting 9/27 and 9/29 PT notes?",
+    "What respite and evening support can be arranged for Robert, and who will follow up?"
+  ],
+  "removed_claims": [],
+  "run": {
+    "models": {
+      "plan": "claude-haiku-5-5",
+      "gather": "claude-haiku-5-5",
+      "draft": "claude-sonnet-5-5",
+      "verify": "claude-sonnet-5-5"
+    },
+    "draft_attempts": 1,
+    "tool_calls": [
+      {
+        "tool": "get_participant_summary",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_encounters",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_vitals",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_medication_changes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_immunizations",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "bleeding, bruising, black stools, blood in urine, anemia",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "chest pain, angina, nitroglycerin use, shortness of breath, palpitations",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "opioid, pain medication, early refill, urine drug screen, substance use, relapse, treatment",
+          "since": "2025-01-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "migraine headache frequency, rescue medication, pain score",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "dizziness, lightheaded, orthostatic, fatigue, slow heart rate",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "dental, teeth, jaw pain, DXA bone density, calcium vitamin D, alendronate fasting",
+          "since": "2025-06-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "adult day center attendance, missed transport, caregiver strain, respite, housing",
+          "since": "2026-08-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "depression, anxiety, PHQ, GAD, mood, cognitive screen, MoCA, confusion",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "126822f8-bc47-c89f-2641-da07aca9b7bb",
+          "query": "lipid panel, cholesterol, liver enzymes, myalgia, muscle pain, cardiology visit, ECG, stress test",
+          "since": "2026-06-01"
+        },
+        "by": "model"
+      }
+    ],
+    "llm_calls": 6,
+    "input_tokens": 30566,
+    "output_tokens": 6784,
+    "cost_usd": 0.0436,
+    "llm_seconds": 38.08,
+    "by_step": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0008
+      },
+      "gather": {
+        "calls": 3,
+        "cost_usd": 0.0037
+      },
+      "draft": {
+        "calls": 1,
+        "cost_usd": 0.0271
+      },
+      "verify": {
+        "calls": 1,
+        "cost_usd": 0.0119
+      }
+    },
+    "seconds": 38.16,
+    "trace": [
+      {
+        "type": "step",
+        "step": "plan",
+        "model": "claude-haiku-5-5",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "ok": true,
+        "summary": "age 73, 8 conditions, 5 medications",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "plan",
+        "checks": [
+          "Confirm the review window (2026-09-01 to 2026-11-30) and pull all encounters in that window, plus any ED visits or admissions since the last IDT review, with reasons and discharge diagnoses.",
+          "Falls and near-falls review: any falls, fall-related injuries, or fractures in the window, given osteoporosis, scoliosis, and new antiplatelet therapy (clopidogrel).",
+          "Bleeding and antiplatelet safety: any bleeding events, bruising, GI or urinary bleeding, or new anemia labs, given clopidogrel started 2026-07-07 alongside a new ischemic heart disease diagnosis.",
+          "Cardiac symptom check: chest pain or angina episodes, nitroglycerin spray use frequency, dyspnea, palpitations, and any cardiology visits, ECGs, or stress tests since the 2026-06-30 ischemic heart disease onset.",
+          "Blood pressure and heart rate trend in the window, with attention to metoprolol succinate 100 mg (dizziness, bradycardia, orthostatic symptoms, fatigue).",
+          "Medication reconciliation: confirm all five active meds (metoprolol, alendronic acid, clopidogrel, nitroglycerin spray, simvastatin), check for any stops, dose changes, or new starts not on the list, and review adherence and refill gaps.",
+          "Simvastatin and lipid follow-up: any lipid panel, liver enzymes, or muscle symptoms (myalgias) reported; confirm the 20 mg dose was reviewed against current cardiac plan.",
+          "Osteoporosis care: alendronic acid adherence (taken fasting, upright 30 minutes), dental status given impacted molars and bisphosphonate use, calcium/vitamin D intake, and whether a DXA or bone-health follow-up is due.",
+          "Substance use and dependent drug abuse history (diagnosed 2018): review any pain-medication prescriptions, early refill requests, controlled-substance fills across pharmacies, urine drug screens, relapse signals, and treatment engagement. Check for any opioid or sedative use in the window, which could interact with metoprolol or fall risk.",
+          "Chronic pain and migraine: pain scores, migraine frequency and days per month, rescue medication use, headache-related ED visits, and whether the migraine plan and pain plan have been reviewed since last IDT.",
+          "Weight and obesity trend (BMI 30+): compare weights across the window with prior values and note any significant change in weight or appetite.",
+          "Function and ADLs: changes in mobility, gait, transfers, bathing, dressing, medication management, and IADLs, with attention to scoliosis-related back pain and any new assistive device use.",
+          "Cognition and mood: screening scores, any new confusion or memory concerns, depression or anxiety screens (PHQ/GAD), and any mood-related notes, especially given chronic pain and substance use history.",
+          "Attendance and engagement: PACE day center attendance rate in the window, missed transport, missed appointments, and any reasons documented.",
+          "Caregiver and social situation: changes in living arrangement, caregiver availability or strain, housing or transportation barriers, and any new social needs since last review.",
+          "Care-plan items due: review care-plan goals, any overdue assessments or reassessments (MDS-type items, nutrition, dental, behavioral health referrals), and any follow-up actions assigned at the last IDT meeting that remain open.",
+          "Document findings as factual changes and open questions for the IDT to discuss, without making treatment recommendations."
+        ],
+        "t": 8.9,
+        "cost_usd": 0.0008
+      },
+      {
+        "type": "step",
+        "step": "gather",
+        "model": "claude-haiku-5-5",
+        "attempt": 1,
+        "t": 8.9,
+        "cost_usd": 0.0008
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "age 73, 8 conditions, 5 medications",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "14 notes",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 encounters",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 weights, weight -0.4%, 3 blood pressures, 0 high",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 started, 0 stopped",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "flu vaccine this season: no",
+        "t": 11.5,
+        "cost_usd": 0.0015
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "bleeding, bruising, black stools, blood in urine, anemia",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "bleeding, bruising, black stools, blood in urine, anemia",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain, angina, nitroglycerin use, shortness of breath, palpitations",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain, angina, nitroglycerin use, shortness of breath, palpitations",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "opioid, pain medication, early refill, urine drug screen, substance use, relapse, treatment",
+          "since": "2025-01-01"
+        },
+        "by": "model",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "opioid, pain medication, early refill, urine drug screen, substance use, relapse, treatment",
+          "since": "2025-01-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "4 matching notes (keyword search)",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "migraine headache frequency, rescue medication, pain score",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "migraine headache frequency, rescue medication, pain score",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 matching notes (keyword search)",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "dizziness, lightheaded, orthostatic, fatigue, slow heart rate",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "dizziness, lightheaded, orthostatic, fatigue, slow heart rate",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "dental, teeth, jaw pain, DXA bone density, calcium vitamin D, alendronate fasting",
+          "since": "2025-06-01"
+        },
+        "by": "model",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "dental, teeth, jaw pain, DXA bone density, calcium vitamin D, alendronate fasting",
+          "since": "2025-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "adult day center attendance, missed transport, caregiver strain, respite, housing",
+          "since": "2026-08-01"
+        },
+        "by": "model",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "adult day center attendance, missed transport, caregiver strain, respite, housing",
+          "since": "2026-08-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "depression, anxiety, PHQ, GAD, mood, cognitive screen, MoCA, confusion",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "depression, anxiety, PHQ, GAD, mood, cognitive screen, MoCA, confusion",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "lipid panel, cholesterol, liver enzymes, myalgia, muscle pain, cardiology visit, ECG, stress test",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "lipid panel, cholesterol, liver enzymes, myalgia, muscle pain, cardiology visit, ECG, stress test",
+          "since": "2026-06-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 matching note (keyword search)",
+        "t": 18.3,
+        "cost_usd": 0.0031
+      },
+      {
+        "type": "step",
+        "step": "draft",
+        "model": "claude-sonnet-5-5",
+        "notes": 14,
+        "t": 21.2,
+        "cost_usd": 0.0045
+      },
+      {
+        "type": "draft",
+        "headline": "Jerónimo fell on 9/25 and has had about two weeks of new evening confusion (once leaving the stove on), and his caregiver grandson is exhausted and asking for respite.",
+        "items": [
+          {
+            "severity": "high",
+            "category": "cognition",
+            "statement": "On 2026-11-02 Robert reported about two weeks of increased evening confusion, including once leaving the stove on. Jerónimo was oriented to person and place but not date, with no fever. The plan was a urinalysis, medication review and PCP visit that week. The notes show no results or visit, and the later 11/13 nursing check says \"no new concerns\" without mentioning the confusion.",
+            "citations": [
+              "126822f8-n004",
+              "126822f8-n009",
+              "record:encounters"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "fall",
+            "statement": "Fall at home on 2026-09-25 getting out of bed. His grandson found him on the floor. He denied head strike or loss of consciousness and had a small left forearm skin tear. Fall risk was reassessed as high and a PT referral was placed.",
+            "citations": [
+              "126822f8-n002",
+              "record:encounters"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "functional_status",
+            "statement": "The 2026-09-29 PT evaluation found slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, home safety evaluation and bathroom grab bars, with PT twice weekly. The notes do not show whether the walker, home safety evaluation or grab bars were completed.",
+            "citations": [
+              "126822f8-n003"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "caregiver",
+            "statement": "On 2026-11-22 Robert, his grandson and primary caregiver, reported exhaustion and poor sleep. He is worried about managing evenings alone and requested respite. Respite options and a caregiver support group were discussed.",
+            "citations": [
+              "126822f8-n001"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "other",
+            "statement": "The notes conflict about the fall. A PT note dated 2026-09-27 says the fall is resolved, he is at baseline, and it was removed from the problem list. The PT evaluation two days later (9/29) documents unsteady gait, TUG 19 seconds and a plan for twice-weekly therapy. The team may want to reconcile the problem list.",
+            "citations": [
+              "126822f8-n015",
+              "126822f8-n003"
+            ]
+          },
+          {
+            "severity": "low",
+            "category": "care_plan_due",
+            "statement": "No influenza vaccine is recorded for the current flu season, which began 2026-08-01.",
+            "citations": [
+              "record:immunizations"
+            ]
+          }
+        ],
+        "t": 34.2,
+        "cost_usd": 0.0316
+      },
+      {
+        "type": "step",
+        "step": "verify",
+        "model": "claude-sonnet-5-5",
+        "items": 6,
+        "t": 34.2,
+        "cost_usd": 0.0316
+      },
+      {
+        "type": "verdicts",
+        "attempt": 1,
+        "results": [
+          {
+            "index": 0,
+            "verdict": "supported",
+            "reason": "Note n004 matches all details (two weeks, stove, oriented to person/place not date, no fever, plan). The 11/13 note says 'No new concerns' with no mention of confusion. The absence of results or a visit is consistent with the cited notes.",
+            "statement": "On 2026-11-02 Robert reported about two weeks of increased evening confusion, including once leaving the stove on. Jerónimo was oriented to person and place but not date, with no fever. The plan was a urinalysis, medication review and PCP visit that week. The notes show no results or visit, and the later 11/13 nursing check says \"no new concerns\" without mentioning the confusion."
+          },
+          {
+            "index": 1,
+            "verdict": "supported",
+            "reason": "All details match note n002: fall 9/25 getting out of bed, grandson found him, denied head strike/LOC, left forearm skin tear, fall risk high, PT referral.",
+            "statement": "Fall at home on 2026-09-25 getting out of bed. His grandson found him on the floor. He denied head strike or loss of consciousness and had a small left forearm skin tear. Fall risk was reassessed as high and a PT referral was placed."
+          },
+          {
+            "index": 2,
+            "verdict": "supported",
+            "reason": "The PT evaluation matches: slow unsteady gait, intermittent cane, TUG 19 s, walker, home safety evaluation, grab bars, twice weekly. The cited note does not show completion, so the caveat is accurate.",
+            "statement": "The 2026-09-29 PT evaluation found slow, unsteady gait with intermittent cane use and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, home safety evaluation and bathroom grab bars, with PT twice weekly. The notes do not show whether the walker, home safety evaluation or grab bars were completed."
+          },
+          {
+            "index": 3,
+            "verdict": "supported",
+            "reason": "Note n001 matches all stated details.",
+            "statement": "On 2026-11-22 Robert, his grandson and primary caregiver, reported exhaustion and poor sleep. He is worried about managing evenings alone and requested respite. Respite options and a caregiver support group were discussed."
+          },
+          {
+            "index": 4,
+            "verdict": "supported",
+            "reason": "The 9/27 PT note says the fall is resolved, at baseline, removed from the problem list. The 9/29 evaluation documents unsteady gait, TUG 19 s and twice-weekly PT. This is a genuine conflict, and the statement frames it as something to reconcile, not as a conclusion.",
+            "statement": "The notes conflict about the fall. A PT note dated 2026-09-27 says the fall is resolved, he is at baseline, and it was removed from the problem list. The PT evaluation two days later (9/29) documents unsteady gait, TUG 19 seconds and a plan for twice-weekly therapy. The team may want to reconcile the problem list."
+          },
+          {
+            "index": 5,
+            "verdict": "partially_supported",
+            "reason": "The record shows flu_vaccine_this_season is false and the season started 8/1/2026, so no vaccine is recorded this season. However, the 2026-06-30 influenza vaccine predates the season start, and the statement does not mention that. The core claim holds, but the context is incomplete.",
+            "statement": "No influenza vaccine is recorded for the current flu season, which began 2026-08-01."
+          }
+        ],
+        "retry": false,
+        "t": 38.2,
+        "cost_usd": 0.0436
+      },
+      {
+        "type": "step",
+        "step": "finalize",
+        "kept": 6,
+        "removed": 0,
+        "t": 38.2,
+        "cost_usd": 0.0436
+      }
+    ]
+  }
+}

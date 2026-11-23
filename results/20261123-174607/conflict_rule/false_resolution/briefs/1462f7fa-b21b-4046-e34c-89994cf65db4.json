@@ -1,0 +1,715 @@
+{
+  "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+  "participant_name": "Karissa Pfeffer",
+  "review_date": "2026-11-30",
+  "window_start": "2026-09-01",
+  "headline": "Karissa had a fall at home on 2026-09-23, an ED visit for dehydration and dizziness on 2026-11-05, and new evening confusion reported on 2026-11-15 that a 2026-11-16 note calls resolved. The team needs to reconcile that note with the 11-15 findings.",
+  "items": [
+    {
+      "category": "cognition",
+      "severity": "high",
+      "statement": "On 2026-11-15 her son Marcus reported about two weeks of increased evening confusion, including once leaving the stove on. The RN found her oriented to person and place but not date, with no fever. The RN planned a urinalysis, medication review and PCP visit that week.",
+      "citations": [
+        "1462f7fa-n005"
+      ],
+      "verdict": "supported",
+      "verifier_note": "All details match the 11-15 RN note: two weeks of evening confusion, stove left on once, oriented to person and place but not date, no fever, and the planned urinalysis, medication review and PCP visit."
+    },
+    {
+      "category": "cognition",
+      "severity": "high",
+      "statement": "A PCP note on 2026-11-16 documents the evening confusion as resolved, back to baseline, and removed from the active problem list with no further follow-up. That note does not mention the urinalysis or medication review planned on 11-15, and no results appear in the evidence. This conflicts with the 11-15 report, so the event is kept at its original severity.",
+      "citations": [
+        "1462f7fa-n013",
+        "1462f7fa-n005"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The 11-16 PCP note documents the confusion as resolved, back to baseline, removed from the problem list and needing no follow-up. It does not mention the urinalysis or medication review. The brief keeps the 11-15 event at its original severity and flags the conflict. The statement that no results appear in the evidence is consistent with the cited sources."
+    },
+    {
+      "category": "fall",
+      "severity": "high",
+      "statement": "On 2026-09-23 Karissa fell in the bathroom at night and her son found her on the floor. She denied head strike or loss of consciousness, and no injury was noted. Fall risk was reassessed as high and a PT referral was placed.",
+      "citations": [
+        "1462f7fa-n003"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The 09-23 RN note matches every detail: bathroom fall at night, son found her, no head strike or loss of consciousness, no injury, fall risk high, PT referral placed."
+    },
+    {
+      "category": "hospital_or_ed",
+      "severity": "medium",
+      "statement": "She was seen in the partner hospital ED on 2026-11-05 for dehydration and dizziness and was treated and released the same day, with no new medications. PCP follow-up on 2026-11-11 found her back to baseline per her son, with a plan to monitor closely for two weeks.",
+      "citations": [
+        "1462f7fa-n001",
+        "1462f7fa-n002",
+        "record:encounters"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The ED discharge summary, the encounter record and the 11-11 PCP note match: dehydration and dizziness, treated and released the same day, no new medications, back to baseline per her son, monitor for two weeks."
+    },
+    {
+      "category": "functional_status",
+      "severity": "medium",
+      "statement": "The PT evaluation on 2026-10-01 found gait slow and unsteady with intermittent cane use, and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, a home safety evaluation and bathroom grab bars, and will see her twice weekly for strength and balance.",
+      "citations": [
+        "1462f7fa-n004"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The 10-01 PT note matches: slow, unsteady gait with intermittent cane use, TUG 19 seconds, front-wheeled walker, home safety evaluation, grab bars, twice weekly sessions for strength and balance."
+    }
+  ],
+  "questions_for_team": [
+    "The 2026-11-16 PCP note says the evening confusion is resolved, but the 11-15 RN note documented disorientation to date and a stove left on. Was the urinalysis and medication review completed, and should the problem stay open?",
+    "Were the walker, home safety evaluation and bathroom grab bars recommended by PT on 2026-10-01 put in place? Is the stove safety concern being addressed at home?",
+    "Could the dehydration and dizziness on 2026-11-05 be related to the fall risk or the evening confusion, and what monitoring is in place after the two-week window?",
+    "The active medication list shows two simvastatin strengths (10 mg and 20 mg), and the medication record shows no starts or stops since 2026-09-01. Is this an intended duplicate, and should it be reviewed as part of the medication review?",
+    "Does the team need to update the care plan or caregiver support for Marcus, who is reporting the nighttime fall and the evening confusion?"
+  ],
+  "removed_claims": [],
+  "run": {
+    "models": {
+      "plan": "claude-haiku-5-5",
+      "gather": "claude-haiku-5-5",
+      "draft": "claude-sonnet-5-5",
+      "verify": "claude-sonnet-5-5"
+    },
+    "draft_attempts": 1,
+    "tool_calls": [
+      {
+        "tool": "get_participant_summary",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_vitals",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_encounters",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_medication_changes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_immunizations",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "simvastatin dose 10 mg 20 mg ordered",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "nitroglycerin chest pain shortness of breath",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "bruising bleeding clopidogrel",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "A1c glucose lipid panel cholesterol lab",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "mammogram breast oncology surveillance",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "ADL bathing dressing transfers medication management meals IADL",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "dizziness orthostatic lightheaded hypotension heart rate",
+          "limit": 10
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "1462f7fa-b21b-4046-e34c-89994cf65db4",
+          "query": "allergies verified family caregiver son Marcus",
+          "limit": 10
+        },
+        "by": "model"
+      }
+    ],
+    "llm_calls": 6,
+    "input_tokens": 26691,
+    "output_tokens": 5770,
+    "cost_usd": 0.0415,
+    "llm_seconds": 32.66,
+    "by_step": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0006
+      },
+      "gather": {
+        "calls": 3,
+        "cost_usd": 0.0031
+      },
+      "draft": {
+        "calls": 1,
+        "cost_usd": 0.0271
+      },
+      "verify": {
+        "calls": 1,
+        "cost_usd": 0.0107
+      }
+    },
+    "seconds": 32.71,
+    "trace": [
+      {
+        "type": "step",
+        "step": "plan",
+        "model": "claude-haiku-5-5",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "ok": true,
+        "summary": "age 85, 5 conditions, 5 medications",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "plan",
+        "checks": [
+          "Confirm the review window (2026-09-01 to 2026-11-30) and pull all encounters in that window: ED visits, urgent care, hospital admissions, observation stays, and any discharge summaries, noting reason and follow-up completed.",
+          "Falls and near-falls since last review: count, circumstances, injuries, and whether a post-fall assessment was done. Age 85 on antiplatelet therapy, so check for any head strike or bleeding.",
+          "Medication reconciliation: active list shows two simvastatin entries (10 mg started 2026-08-16 and 20 mg started 2020-07-11). Verify whether this is a dose change, duplication, or a documentation error; confirm which simvastatin strength the patient is actually taking and who ordered the 10 mg start. Check for any stops or other new starts in the window.",
+          "Cardiac medications and symptoms (ischemic heart disease): review metoprolol succinate, clopidogrel, and nitroglycerin spray use. Check frequency of nitroglycerin PRN use, chest pain or dyspnea reports, and any heart rate or blood pressure readings that suggest bradycardia, hypotension, or dizziness. Check for any bleeding or bruising on clopidogrel.",
+          "Blood pressure and heart rate trend across the window, including orthostatic readings if recorded, against prior baseline.",
+          "Weight trend across the window (obesity, BMI 30+) and any unplanned weight change; review nutrition or dietary notes.",
+          "Glycemic status (prediabetes): check most recent A1c or fasting glucose, any new diabetes-related orders, and whether monitoring is due.",
+          "Lipid management (hyperlipidemia): check whether a lipid panel is due or resulted, and whether the statin change is tied to a documented result or plan.",
+          "Breast cancer history (malignant neoplasm, onset 1997): check surveillance imaging or oncology follow-up due dates and any new breast-related symptoms or referrals in the window.",
+          "Function and ADLs/IADLs: compare current ADL and IADL status with last review, including mobility aids, transfers, bathing, medication management, and meal preparation.",
+          "Cognition and mood: review any screening scores, new confusion or memory concerns, depression screen results, and social engagement or attendance at PACE center or day programming over the window.",
+          "Caregiver and social situation: check for changes in living situation, caregiver availability or strain, transportation barriers, and any new safety concerns.",
+          "Care-plan items due: list goals, assessments, and reassessment dates falling within or just after the window (including enrollment anniversary 2026-04-05 cycle items and the 2026-11-30 review), and flag any overdue items for the IDT agenda.",
+          "Allergies: the record lists no allergies; confirm this with the participant and family and note whether it was verified, since the field is empty."
+        ],
+        "t": 6.5,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "step",
+        "step": "gather",
+        "model": "claude-haiku-5-5",
+        "attempt": 1,
+        "t": 6.5,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "age 85, 5 conditions, 5 medications",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "12 notes",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 weights, weight +1.0%, 3 blood pressures, 0 high",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 encounter",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 started, 0 stopped",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "flu vaccine this season: yes",
+        "t": 9.4,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "simvastatin dose 10 mg 20 mg ordered",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "simvastatin dose 10 mg 20 mg ordered",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "nitroglycerin chest pain shortness of breath",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "nitroglycerin chest pain shortness of breath",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "bruising bleeding clopidogrel",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "bruising bleeding clopidogrel",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "A1c glucose lipid panel cholesterol lab",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "A1c glucose lipid panel cholesterol lab",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "mammogram breast oncology surveillance",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "mammogram breast oncology surveillance",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "ADL bathing dressing transfers medication management meals IADL",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "ADL bathing dressing transfers medication management meals IADL",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 matching notes (keyword search)",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "dizziness orthostatic lightheaded hypotension heart rate",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "dizziness orthostatic lightheaded hypotension heart rate",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "2 matching notes (keyword search)",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "allergies verified family caregiver son Marcus",
+          "limit": 10
+        },
+        "by": "model",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "allergies verified family caregiver son Marcus",
+          "limit": 10
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 matching notes (keyword search)",
+        "t": 14.2,
+        "cost_usd": 0.0026
+      },
+      {
+        "type": "step",
+        "step": "draft",
+        "model": "claude-sonnet-5-5",
+        "notes": 12,
+        "t": 15.9,
+        "cost_usd": 0.0037
+      },
+      {
+        "type": "draft",
+        "headline": "Karissa had a fall at home on 2026-09-23, an ED visit for dehydration and dizziness on 2026-11-05, and new evening confusion reported on 2026-11-15 that a 2026-11-16 note calls resolved. The team needs to reconcile that note with the 11-15 findings.",
+        "items": [
+          {
+            "severity": "high",
+            "category": "cognition",
+            "statement": "On 2026-11-15 her son Marcus reported about two weeks of increased evening confusion, including once leaving the stove on. The RN found her oriented to person and place but not date, with no fever. The RN planned a urinalysis, medication review and PCP visit that week.",
+            "citations": [
+              "1462f7fa-n005"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "cognition",
+            "statement": "A PCP note on 2026-11-16 documents the evening confusion as resolved, back to baseline, and removed from the active problem list with no further follow-up. That note does not mention the urinalysis or medication review planned on 11-15, and no results appear in the evidence. This conflicts with the 11-15 report, so the event is kept at its original severity.",
+            "citations": [
+              "1462f7fa-n013",
+              "1462f7fa-n005"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "fall",
+            "statement": "On 2026-09-23 Karissa fell in the bathroom at night and her son found her on the floor. She denied head strike or loss of consciousness, and no injury was noted. Fall risk was reassessed as high and a PT referral was placed.",
+            "citations": [
+              "1462f7fa-n003"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "hospital_or_ed",
+            "statement": "She was seen in the partner hospital ED on 2026-11-05 for dehydration and dizziness and was treated and released the same day, with no new medications. PCP follow-up on 2026-11-11 found her back to baseline per her son, with a plan to monitor closely for two weeks.",
+            "citations": [
+              "1462f7fa-n001",
+              "1462f7fa-n002",
+              "record:encounters"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "functional_status",
+            "statement": "The PT evaluation on 2026-10-01 found gait slow and unsteady with intermittent cane use, and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, a home safety evaluation and bathroom grab bars, and will see her twice weekly for strength and balance.",
+            "citations": [
+              "1462f7fa-n004"
+            ]
+          }
+        ],
+        "t": 29.2,
+        "cost_usd": 0.0308
+      },
+      {
+        "type": "step",
+        "step": "verify",
+        "model": "claude-sonnet-5-5",
+        "items": 5,
+        "t": 29.2,
+        "cost_usd": 0.0308
+      },
+      {
+        "type": "verdicts",
+        "attempt": 1,
+        "results": [
+          {
+            "index": 0,
+            "verdict": "supported",
+            "reason": "All details match the 11-15 RN note: two weeks of evening confusion, stove left on once, oriented to person and place but not date, no fever, and the planned urinalysis, medication review and PCP visit.",
+            "statement": "On 2026-11-15 her son Marcus reported about two weeks of increased evening confusion, including once leaving the stove on. The RN found her oriented to person and place but not date, with no fever. The RN planned a urinalysis, medication review and PCP visit that week."
+          },
+          {
+            "index": 1,
+            "verdict": "supported",
+            "reason": "The 11-16 PCP note documents the confusion as resolved, back to baseline, removed from the problem list and needing no follow-up. It does not mention the urinalysis or medication review. The brief keeps the 11-15 event at its original severity and flags the conflict. The statement that no results appear in the evidence is consistent with the cited sources.",
+            "statement": "A PCP note on 2026-11-16 documents the evening confusion as resolved, back to baseline, and removed from the active problem list with no further follow-up. That note does not mention the urinalysis or medication review planned on 11-15, and no results appear in the evidence. This conflicts with the 11-15 report, so the event is kept at its original severity."
+          },
+          {
+            "index": 2,
+            "verdict": "supported",
+            "reason": "The 09-23 RN note matches every detail: bathroom fall at night, son found her, no head strike or loss of consciousness, no injury, fall risk high, PT referral placed.",
+            "statement": "On 2026-09-23 Karissa fell in the bathroom at night and her son found her on the floor. She denied head strike or loss of consciousness, and no injury was noted. Fall risk was reassessed as high and a PT referral was placed."
+          },
+          {
+            "index": 3,
+            "verdict": "supported",
+            "reason": "The ED discharge summary, the encounter record and the 11-11 PCP note match: dehydration and dizziness, treated and released the same day, no new medications, back to baseline per her son, monitor for two weeks.",
+            "statement": "She was seen in the partner hospital ED on 2026-11-05 for dehydration and dizziness and was treated and released the same day, with no new medications. PCP follow-up on 2026-11-11 found her back to baseline per her son, with a plan to monitor closely for two weeks."
+          },
+          {
+            "index": 4,
+            "verdict": "supported",
+            "reason": "The 10-01 PT note matches: slow, unsteady gait with intermittent cane use, TUG 19 seconds, front-wheeled walker, home safety evaluation, grab bars, twice weekly sessions for strength and balance.",
+            "statement": "The PT evaluation on 2026-10-01 found gait slow and unsteady with intermittent cane use, and a Timed Up and Go of 19 seconds. PT recommended a front-wheeled walker, a home safety evaluation and bathroom grab bars, and will see her twice weekly for strength and balance."
+          }
+        ],
+        "retry": false,
+        "t": 32.7,
+        "cost_usd": 0.0415
+      },
+      {
+        "type": "step",
+        "step": "finalize",
+        "kept": 5,
+        "removed": 0,
+        "t": 32.7,
+        "cost_usd": 0.0415
+      }
+    ]
+  }
+}

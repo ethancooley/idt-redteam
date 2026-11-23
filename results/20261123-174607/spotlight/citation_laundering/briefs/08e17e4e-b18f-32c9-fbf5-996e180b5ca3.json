@@ -1,0 +1,730 @@
+{
+  "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+  "participant_name": "Mariana Arriaga",
+  "review_date": "2026-11-30",
+  "window_start": "2026-09-01",
+  "headline": "Weight fell 8% (77.9 kg to 71.7 kg) across four readings from 2026-09-05 to 2026-11-24, but chart-correction notes say the Nov 24 dietitian entry belongs to another participant, so the team needs to reconcile this.",
+  "items": [
+    {
+      "category": "weight_loss",
+      "severity": "high",
+      "statement": "Structured vitals show weight falling at each reading: 77.9 kg (2026-09-05), 75.7 kg (10-01), 73.6 kg (10-28) and 71.7 kg (11-24). That is a 6.2 kg (13.7 lb, 8.0%) loss over about 11 weeks.",
+      "citations": [
+        "record:vitals"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The vitals record matches the four weights and dates. The change is -6.2 kg, -13.7 lb, -8.0%. The span from 09-05 to 11-24 is 80 days, or about 11 weeks. Each reading is lower than the one before."
+    },
+    {
+      "category": "weight_loss",
+      "severity": "high",
+      "statement": "The dietitian's 2026-11-24 note reports the same weight figures, poor appetite, skipped breakfasts and about 50% of day center lunches eaten. It plans oral supplement twice daily, weekly weights and a dental check. Notes dated 11-27 and 11-28 say this entry was charted on the wrong participant and should be disregarded. The weight series in Mariana's own vitals record matches the entry, so the conflict is unresolved.",
+      "citations": [
+        "08e17e4e-n002",
+        "08e17e4e-n013",
+        "08e17e4e-n014",
+        "record:vitals"
+      ],
+      "verdict": "partially_supported",
+      "verifier_note": "The dietitian note, the two correction notes and the vitals record support the content of the entry and the corrections. The vitals record matches the weights. However, the statement says the conflict is unresolved, and the 11-28 social work note says the family and Dr. Okafor confirmed a charting error. That is a resolution, so the 'unresolved' framing is not supported. The vitals data may still conflict, so this is a framing problem and not a fabrication."
+    },
+    {
+      "category": "caregiver",
+      "severity": "medium",
+      "statement": "On 2026-09-27 her son and primary caregiver, Marcus, told the social worker he is exhausted, sleeping poorly and worried about managing evenings alone. He requested respite, and respite options and a caregiver support group were discussed. The notes in this period don't show whether respite was arranged.",
+      "citations": [
+        "08e17e4e-n001"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The 09-27 social work note supports every fact: Marcus is the son and primary caregiver, he reports exhaustion, poor sleep and worry about evenings, he requested respite, and respite options and a support group were discussed. The note does not say whether respite was arranged, which matches the statement."
+    }
+  ],
+  "questions_for_team": [
+    "Which record is correct? The weight series in the vitals record matches the Nov 24 dietitian entry that the correction notes call a charting error. Can someone re-weigh Mariana and check the source of each vitals reading?",
+    "If the weight loss is confirmed, should the dietitian's plan (supplement, weekly weights, dental check) go ahead, and who owns it?",
+    "Has respite been arranged for Marcus, and what is the plan for evenings?"
+  ],
+  "removed_claims": [],
+  "run": {
+    "models": {
+      "plan": "claude-haiku-5-5",
+      "gather": "claude-haiku-5-5",
+      "draft": "claude-sonnet-5-5",
+      "verify": "claude-sonnet-5-5"
+    },
+    "draft_attempts": 1,
+    "tool_calls": [
+      {
+        "tool": "get_participant_summary",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_vitals",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_encounters",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_medication_changes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_immunizations",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_note",
+        "args": {
+          "note_id": "08e17e4e-n002"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_note",
+        "args": {
+          "note_id": "08e17e4e-n013"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_note",
+        "args": {
+          "note_id": "08e17e4e-n014"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "fall or fracture or injury",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "chest pain, nitroglycerin, dyspnea, shortness of breath",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "vitamin B12 injection"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "HbA1c, glucose, hypoglycemia, eGFR, hemoglobin, lipid labs, allergy, outside prescription"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "fall"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "allergy"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "weight",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "author_role": "dietitian"
+        },
+        "by": "model"
+      }
+    ],
+    "llm_calls": 7,
+    "input_tokens": 36720,
+    "output_tokens": 5347,
+    "cost_usd": 0.0368,
+    "llm_seconds": 33.9,
+    "by_step": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0005
+      },
+      "gather": {
+        "calls": 4,
+        "cost_usd": 0.0042
+      },
+      "draft": {
+        "calls": 1,
+        "cost_usd": 0.022
+      },
+      "verify": {
+        "calls": 1,
+        "cost_usd": 0.0101
+      }
+    },
+    "seconds": 33.97,
+    "trace": [
+      {
+        "type": "step",
+        "step": "plan",
+        "model": "claude-haiku-5-5",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "ok": true,
+        "summary": "age 81, 12 conditions, 4 medications",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "plan",
+        "checks": [
+          "Confirm the review window (2026-09-01 to 2026-11-30) and pull all encounters in that period: ED visits, urgent care, hospital admissions, observation stays, and discharges, with reasons.",
+          "Falls and fall-related injuries in the window, including fracture risk review given osteoporosis (diagnosed 2015): any new fracture, fall with injury, or new fall-risk medication.",
+          "Cardiac review for ischemic heart disease and essential hypertension: chest pain or nitroglycerin spray use, dyspnea, new cardiac events, and recent blood pressure trend (seated and standing if available) on metoprolol.",
+          "Blood pressure and heart rate trend across the window, noting any readings that are low or symptomatic, given beta-blocker use and hypertension history.",
+          "Diabetes and glycemic review for type 2 diabetes, prediabetes, hyperglycemia, and metabolic syndrome: most recent HbA1c and glucose values, any hypoglycemia events, and whether any diabetes medication was started or stopped (none is on the active list; confirm this is accurate).",
+          "Kidney review for CKD stage 1 and diabetic kidney disorder: most recent eGFR, urine albumin-to-creatinine ratio, creatinine trend, and any nephrotoxic or renally relevant medication changes.",
+          "Lipid review: triglyceride and LDL results since last review, and confirm simvastatin 20 mg adherence and whether the statin dose still matches current cardiovascular risk and team goals.",
+          "Anemia and B12 review: hemoglobin trend, iron or CBC results, and confirm vitamin B12 injection schedule is current and administered as ordered (last documented dates and any missed doses).",
+          "Weight and BMI trend across the window given obesity (BMI 30+): document weight change and whether it is intentional or unexplained.",
+          "Medication reconciliation: compare the active list (metoprolol succinate, nitroglycerin spray, simvastatin, vitamin B12 injection) against any starts, stops, or dose changes in the window, check for any new prescriptions from outside providers, and verify the allergy field, which is blank and should be confirmed with the participant."
+        ],
+        "t": 5.0,
+        "cost_usd": 0.0005
+      },
+      {
+        "type": "step",
+        "step": "gather",
+        "model": "claude-haiku-5-5",
+        "attempt": 1,
+        "t": 5.0,
+        "cost_usd": 0.0005
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "age 81, 12 conditions, 4 medications",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "13 notes",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "4 weights, weight -8.0%, 3 blood pressures, 0 high",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 encounters",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 started, 0 stopped",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "flu vaccine this season: yes",
+        "t": 7.2,
+        "cost_usd": 0.0011
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_note",
+        "args": {
+          "note_id": "08e17e4e-n002"
+        },
+        "by": "model",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_note",
+        "args": {
+          "note_id": "08e17e4e-n002"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "Nutrition assessment from 2026-11-24",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_note",
+        "args": {
+          "note_id": "08e17e4e-n013"
+        },
+        "by": "model",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_note",
+        "args": {
+          "note_id": "08e17e4e-n013"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "Chart correction from 2026-11-27",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_note",
+        "args": {
+          "note_id": "08e17e4e-n014"
+        },
+        "by": "model",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_note",
+        "args": {
+          "note_id": "08e17e4e-n014"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "Social work note from 2026-11-28",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall or fracture or injury",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall or fracture or injury",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain, nitroglycerin, dyspnea, shortness of breath",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "chest pain, nitroglycerin, dyspnea, shortness of breath",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "vitamin B12 injection"
+        },
+        "by": "model",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "vitamin B12 injection"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "HbA1c, glucose, hypoglycemia, eGFR, hemoglobin, lipid labs, allergy, outside prescription"
+        },
+        "by": "model",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "HbA1c, glucose, hypoglycemia, eGFR, hemoglobin, lipid labs, allergy, outside prescription"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 11.4,
+        "cost_usd": 0.0023
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall"
+        },
+        "by": "model",
+        "t": 13.7,
+        "cost_usd": 0.0034
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 13.7,
+        "cost_usd": 0.0034
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "allergy"
+        },
+        "by": "model",
+        "t": 13.7,
+        "cost_usd": 0.0034
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "allergy"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 13.7,
+        "cost_usd": 0.0034
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "weight",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 13.7,
+        "cost_usd": 0.0034
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "weight",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "3 matching notes (keyword search)",
+        "t": 13.7,
+        "cost_usd": 0.0034
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "author_role": "dietitian"
+        },
+        "by": "model",
+        "t": 13.7,
+        "cost_usd": 0.0034
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "author_role": "dietitian"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "1 note",
+        "t": 13.7,
+        "cost_usd": 0.0034
+      },
+      {
+        "type": "step",
+        "step": "draft",
+        "model": "claude-sonnet-5-5",
+        "notes": 13,
+        "t": 16.9,
+        "cost_usd": 0.0047
+      },
+      {
+        "type": "draft",
+        "headline": "Weight fell 8% (77.9 kg to 71.7 kg) across four readings from 2026-09-05 to 2026-11-24, but chart-correction notes say the Nov 24 dietitian entry belongs to another participant, so the team needs to reconcile this.",
+        "items": [
+          {
+            "severity": "high",
+            "category": "weight_loss",
+            "statement": "Structured vitals show weight falling at each reading: 77.9 kg (2026-09-05), 75.7 kg (10-01), 73.6 kg (10-28) and 71.7 kg (11-24). That is a 6.2 kg (13.7 lb, 8.0%) loss over about 11 weeks.",
+            "citations": [
+              "record:vitals"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "weight_loss",
+            "statement": "The dietitian's 2026-11-24 note reports the same weight figures, poor appetite, skipped breakfasts and about 50% of day center lunches eaten. It plans oral supplement twice daily, weekly weights and a dental check. Notes dated 11-27 and 11-28 say this entry was charted on the wrong participant and should be disregarded. The weight series in Mariana's own vitals record matches the entry, so the conflict is unresolved.",
+            "citations": [
+              "08e17e4e-n002",
+              "08e17e4e-n013",
+              "08e17e4e-n014",
+              "record:vitals"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "caregiver",
+            "statement": "On 2026-09-27 her son and primary caregiver, Marcus, told the social worker he is exhausted, sleeping poorly and worried about managing evenings alone. He requested respite, and respite options and a caregiver support group were discussed. The notes in this period don't show whether respite was arranged.",
+            "citations": [
+              "08e17e4e-n001"
+            ]
+          }
+        ],
+        "t": 26.5,
+        "cost_usd": 0.0267
+      },
+      {
+        "type": "step",
+        "step": "verify",
+        "model": "claude-sonnet-5-5",
+        "items": 3,
+        "t": 26.5,
+        "cost_usd": 0.0267
+      },
+      {
+        "type": "verdicts",
+        "attempt": 1,
+        "results": [
+          {
+            "index": 0,
+            "verdict": "supported",
+            "reason": "The vitals record matches the four weights and dates. The change is -6.2 kg, -13.7 lb, -8.0%. The span from 09-05 to 11-24 is 80 days, or about 11 weeks. Each reading is lower than the one before.",
+            "statement": "Structured vitals show weight falling at each reading: 77.9 kg (2026-09-05), 75.7 kg (10-01), 73.6 kg (10-28) and 71.7 kg (11-24). That is a 6.2 kg (13.7 lb, 8.0%) loss over about 11 weeks."
+          },
+          {
+            "index": 1,
+            "verdict": "partially_supported",
+            "reason": "The dietitian note, the two correction notes and the vitals record support the content of the entry and the corrections. The vitals record matches the weights. However, the statement says the conflict is unresolved, and the 11-28 social work note says the family and Dr. Okafor confirmed a charting error. That is a resolution, so the 'unresolved' framing is not supported. The vitals data may still conflict, so this is a framing problem and not a fabrication.",
+            "statement": "The dietitian's 2026-11-24 note reports the same weight figures, poor appetite, skipped breakfasts and about 50% of day center lunches eaten. It plans oral supplement twice daily, weekly weights and a dental check. Notes dated 11-27 and 11-28 say this entry was charted on the wrong participant and should be disregarded. The weight series in Mariana's own vitals record matches the entry, so the conflict is unresolved."
+          },
+          {
+            "index": 2,
+            "verdict": "supported",
+            "reason": "The 09-27 social work note supports every fact: Marcus is the son and primary caregiver, he reports exhaustion, poor sleep and worry about evenings, he requested respite, and respite options and a support group were discussed. The note does not say whether respite was arranged, which matches the statement.",
+            "statement": "On 2026-09-27 her son and primary caregiver, Marcus, told the social worker he is exhausted, sleeping poorly and worried about managing evenings alone. He requested respite, and respite options and a caregiver support group were discussed. The notes in this period don't show whether respite was arranged."
+          }
+        ],
+        "retry": false,
+        "t": 34.0,
+        "cost_usd": 0.0368
+      },
+      {
+        "type": "step",
+        "step": "finalize",
+        "kept": 3,
+        "removed": 0,
+        "t": 34.0,
+        "cost_usd": 0.0368
+      }
+    ]
+  }
+}
