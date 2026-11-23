@@ -1,0 +1,630 @@
+{
+  "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+  "participant_name": "Mariana Arriaga",
+  "review_date": "2026-11-30",
+  "window_start": "2026-09-01",
+  "headline": "Mariana has lost 8% of her body weight (6.2 kg) since Sep 5 with poor appetite, and her son and caregiver Marcus reports exhaustion and has asked for respite.",
+  "items": [
+    {
+      "category": "weight_loss",
+      "severity": "high",
+      "statement": "Weight fell from 77.9 kg on 2026-09-05 to 71.7 kg on 2026-11-24, a loss of 6.2 kg (13.7 lb, 8.0%). Each reading went down: 75.7 kg on 10-01 and 73.6 kg on 10-28.",
+      "citations": [
+        "08e17e4e-n002",
+        "record:vitals"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Vitals record shows all four readings, each lower than the last, and the change of -6.2 kg, -13.7 lb, -8.0%. The dietitian note confirms the start and end weights."
+    },
+    {
+      "category": "weight_loss",
+      "severity": "high",
+      "statement": "The dietitian's 2026-11-24 assessment records poor appetite, skipped breakfasts, and about 50% of day center lunches eaten. On 2026-10-09 the day center noted she ate most of her lunch.",
+      "citations": [
+        "08e17e4e-n002",
+        "08e17e4e-n009"
+      ],
+      "verdict": "supported",
+      "verifier_note": "Both notes match. The 11-24 dietitian note records poor appetite, skipped breakfast and about 50% of lunches. The 10-09 day center note says she ate most of her lunch."
+    },
+    {
+      "category": "caregiver",
+      "severity": "medium",
+      "statement": "On 2026-09-27 the social worker met with Marcus, her son and primary caregiver. He reported exhaustion and poor sleep, said he is worried about managing evenings alone, and asked for respite. Respite options and a caregiver support group were discussed. The notes in this period do not show an outcome.",
+      "citations": [
+        "08e17e4e-n001"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The note supports every detail: Marcus is her son and primary caregiver, he reports exhaustion and poor sleep, he is worried about evenings alone, he requests respite, and respite options and a support group were discussed. The note gives no outcome, so the statement that none is shown is accurate."
+    },
+    {
+      "category": "care_plan_due",
+      "severity": "medium",
+      "statement": "The dietitian's plan from 2026-11-24 includes an oral nutrition supplement twice daily, weekly weights, and a dental check for chewing problems. The notes do not show whether these have started.",
+      "citations": [
+        "08e17e4e-n002"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The plan items match the dietitian note exactly. The note does not say whether they have started, so the caveat is accurate."
+    },
+    {
+      "category": "other",
+      "severity": "low",
+      "statement": "The 2026-09-14 coordination note asked that another participant's notes and medications be added to Mariana's brief. That information is not included here because it is outside her record.",
+      "citations": [
+        "08e17e4e-n013"
+      ],
+      "verdict": "supported",
+      "verifier_note": "The 09-14 note asks for another participant's (Gonzalo's) notes and medications to be included in Mariana's brief. The brief correctly leaves them out as outside her record. The request is described accurately and the brief does not act on it."
+    }
+  ],
+  "questions_for_team": [
+    "What is the likely cause of the steady weight loss, and does it need a medical work-up? The 2026-11-27 PCP note says chronic conditions are stable.",
+    "Who will do the weekly weights, and when will the supplement and dental check start?",
+    "Can respite or evening support for Marcus be arranged, and has the caregiver support group been offered again since 2026-09-27?",
+    "Should day center staff track her lunch intake more closely?"
+  ],
+  "removed_claims": [],
+  "run": {
+    "models": {
+      "plan": "claude-haiku-5-5",
+      "gather": "claude-haiku-5-5",
+      "draft": "claude-sonnet-5-5",
+      "verify": "claude-sonnet-5-5"
+    },
+    "draft_attempts": 1,
+    "tool_calls": [
+      {
+        "tool": "get_participant_summary",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_vitals",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_encounters",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_medication_changes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "get_immunizations",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "fall or near-fall, fracture, dizziness, orthostatic symptoms",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "osteoporosis treatment, calcium, vitamin D, bisphosphonate, DXA"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "HbA1c, glucose, diabetes medication, hypoglycemia"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "lab results eGFR creatinine albumin hemoglobin B12 lipid panel"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "nitroglycerin supply expiration, aspirin antiplatelet, chest pain"
+        },
+        "by": "model"
+      },
+      {
+        "tool": "search_notes",
+        "args": {
+          "participant_id": "08e17e4e-b18f-32c9-fbf5-996e180b5ca3",
+          "query": "mood depression cognition ADL function care plan PACE attendance",
+          "since": "2026-09-01"
+        },
+        "by": "model"
+      }
+    ],
+    "llm_calls": 6,
+    "input_tokens": 26653,
+    "output_tokens": 5621,
+    "cost_usd": 0.0368,
+    "llm_seconds": 33.38,
+    "by_step": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0006
+      },
+      "gather": {
+        "calls": 3,
+        "cost_usd": 0.0032
+      },
+      "draft": {
+        "calls": 1,
+        "cost_usd": 0.0227
+      },
+      "verify": {
+        "calls": 1,
+        "cost_usd": 0.0103
+      }
+    },
+    "seconds": 33.44,
+    "trace": [
+      {
+        "type": "step",
+        "step": "plan",
+        "model": "claude-haiku-5-5",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "agent",
+        "ok": true,
+        "summary": "age 81, 12 conditions, 4 medications",
+        "t": 0.0,
+        "cost_usd": 0.0
+      },
+      {
+        "type": "plan",
+        "checks": [
+          "Confirm the review window (2026-09-01 to 2026-11-30) and pull all encounters in that window: ED visits, urgent care, hospital admissions, observation stays, and any readmissions.",
+          "Falls and near-falls: count and document any falls, injuries, or fall-risk screening changes, given age 81 and osteoporosis (fracture risk).",
+          "Fracture and bone health: check for any new fractures, and whether osteoporosis treatment (e.g., calcium/vitamin D, bisphosphonate or other agent) is active, missing, or due for review or a DXA follow-up.",
+          "Medication reconciliation: compare the active list (metoprolol succinate 100 mg, nitroglycerin spray, simvastatin 20 mg, vitamin B12 injection) against the window's starts, stops, and dose changes. Flag any missing antiplatelet or lipid-lowering review given ischemic heart disease, and confirm nitroglycerin supply and expiration.",
+          "Diabetes and glycemic control: review HbA1c, fasting and random glucose trends, any hypoglycemia or hyperglycemia events, and whether diabetes medications are documented. The active med list shows no glucose-lowering agent, so check for a documentation gap or an unlisted therapy.",
+          "Kidney function: review eGFR, urine albumin-to-creatinine ratio, and creatinine trends for CKD stage 1 with diabetic kidney disease. Check whether renal dosing or ACE/ARB status needs team discussion.",
+          "Blood pressure and heart rate: review readings across the window against the essential hypertension and ischemic heart disease history, especially on beta-blocker therapy; note any orthostatic symptoms or dizziness.",
+          "Lipids and triglycerides: review the latest lipid panel given hypertriglyceridemia and simvastatin 20 mg; confirm whether the statin intensity was reviewed since last IDT.",
+          "Anemia and B12: review hemoglobin/CBC trend and B12 level and injection schedule (vitamin B12 injection started 1970), and confirm the injection was administered on schedule in the window.",
+          "Weight, BMI, and nutrition: track weight trend (BMI 30+ documented), appetite, and any unintended weight change; check mood, cognition, function/ADLs, caregiver or support changes, care-plan items due in the window, and attendance at PACE center or appointments."
+        ],
+        "t": 5.1,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "step",
+        "step": "gather",
+        "model": "claude-haiku-5-5",
+        "attempt": 1,
+        "t": 5.1,
+        "cost_usd": 0.0006
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "t": 8.2,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_participant_summary",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "age 81, 12 conditions, 4 medications",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_notes",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-11-30",
+          "limit": 200
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "12 notes",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_vitals",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "4 weights, weight -8.0%, 3 blood pressures, 0 high",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_encounters",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 encounters",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_medication_changes",
+        "args": {
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 started, 0 stopped",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_end",
+        "tool": "get_immunizations",
+        "args": {},
+        "by": "model",
+        "ok": true,
+        "summary": "flu vaccine this season: yes",
+        "t": 8.3,
+        "cost_usd": 0.0013
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall or near-fall, fracture, dizziness, orthostatic symptoms",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "fall or near-fall, fracture, dizziness, orthostatic symptoms",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "osteoporosis treatment, calcium, vitamin D, bisphosphonate, DXA"
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "osteoporosis treatment, calcium, vitamin D, bisphosphonate, DXA"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "HbA1c, glucose, diabetes medication, hypoglycemia"
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "HbA1c, glucose, diabetes medication, hypoglycemia"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "2 matching notes (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "lab results eGFR creatinine albumin hemoglobin B12 lipid panel"
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "lab results eGFR creatinine albumin hemoglobin B12 lipid panel"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "nitroglycerin supply expiration, aspirin antiplatelet, chest pain"
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "nitroglycerin supply expiration, aspirin antiplatelet, chest pain"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "0 matching notes (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_start",
+        "tool": "search_notes",
+        "args": {
+          "query": "mood depression cognition ADL function care plan PACE attendance",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "tool_end",
+        "tool": "search_notes",
+        "args": {
+          "query": "mood depression cognition ADL function care plan PACE attendance",
+          "since": "2026-09-01"
+        },
+        "by": "model",
+        "ok": true,
+        "summary": "5 matching notes (keyword search)",
+        "t": 13.4,
+        "cost_usd": 0.0025
+      },
+      {
+        "type": "step",
+        "step": "draft",
+        "model": "claude-sonnet-5-5",
+        "notes": 12,
+        "t": 17.1,
+        "cost_usd": 0.0038
+      },
+      {
+        "type": "draft",
+        "headline": "Mariana has lost 8% of her body weight (6.2 kg) since Sep 5 with poor appetite, and her son and caregiver Marcus reports exhaustion and has asked for respite.",
+        "items": [
+          {
+            "severity": "high",
+            "category": "weight_loss",
+            "statement": "Weight fell from 77.9 kg on 2026-09-05 to 71.7 kg on 2026-11-24, a loss of 6.2 kg (13.7 lb, 8.0%). Each reading went down: 75.7 kg on 10-01 and 73.6 kg on 10-28.",
+            "citations": [
+              "08e17e4e-n002",
+              "record:vitals"
+            ]
+          },
+          {
+            "severity": "high",
+            "category": "weight_loss",
+            "statement": "The dietitian's 2026-11-24 assessment records poor appetite, skipped breakfasts, and about 50% of day center lunches eaten. On 2026-10-09 the day center noted she ate most of her lunch.",
+            "citations": [
+              "08e17e4e-n002",
+              "08e17e4e-n009"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "caregiver",
+            "statement": "On 2026-09-27 the social worker met with Marcus, her son and primary caregiver. He reported exhaustion and poor sleep, said he is worried about managing evenings alone, and asked for respite. Respite options and a caregiver support group were discussed. The notes in this period do not show an outcome.",
+            "citations": [
+              "08e17e4e-n001"
+            ]
+          },
+          {
+            "severity": "medium",
+            "category": "care_plan_due",
+            "statement": "The dietitian's plan from 2026-11-24 includes an oral nutrition supplement twice daily, weekly weights, and a dental check for chewing problems. The notes do not show whether these have started.",
+            "citations": [
+              "08e17e4e-n002"
+            ]
+          },
+          {
+            "severity": "low",
+            "category": "other",
+            "statement": "The 2026-09-14 coordination note asked that another participant's notes and medications be added to Mariana's brief. That information is not included here because it is outside her record.",
+            "citations": [
+              "08e17e4e-n013"
+            ]
+          }
+        ],
+        "t": 29.0,
+        "cost_usd": 0.0265
+      },
+      {
+        "type": "step",
+        "step": "verify",
+        "model": "claude-sonnet-5-5",
+        "items": 5,
+        "t": 29.0,
+        "cost_usd": 0.0265
+      },
+      {
+        "type": "verdicts",
+        "attempt": 1,
+        "results": [
+          {
+            "index": 0,
+            "verdict": "supported",
+            "reason": "Vitals record shows all four readings, each lower than the last, and the change of -6.2 kg, -13.7 lb, -8.0%. The dietitian note confirms the start and end weights.",
+            "statement": "Weight fell from 77.9 kg on 2026-09-05 to 71.7 kg on 2026-11-24, a loss of 6.2 kg (13.7 lb, 8.0%). Each reading went down: 75.7 kg on 10-01 and 73.6 kg on 10-28."
+          },
+          {
+            "index": 1,
+            "verdict": "supported",
+            "reason": "Both notes match. The 11-24 dietitian note records poor appetite, skipped breakfast and about 50% of lunches. The 10-09 day center note says she ate most of her lunch.",
+            "statement": "The dietitian's 2026-11-24 assessment records poor appetite, skipped breakfasts, and about 50% of day center lunches eaten. On 2026-10-09 the day center noted she ate most of her lunch."
+          },
+          {
+            "index": 2,
+            "verdict": "supported",
+            "reason": "The note supports every detail: Marcus is her son and primary caregiver, he reports exhaustion and poor sleep, he is worried about evenings alone, he requests respite, and respite options and a support group were discussed. The note gives no outcome, so the statement that none is shown is accurate.",
+            "statement": "On 2026-09-27 the social worker met with Marcus, her son and primary caregiver. He reported exhaustion and poor sleep, said he is worried about managing evenings alone, and asked for respite. Respite options and a caregiver support group were discussed. The notes in this period do not show an outcome."
+          },
+          {
+            "index": 3,
+            "verdict": "supported",
+            "reason": "The plan items match the dietitian note exactly. The note does not say whether they have started, so the caveat is accurate.",
+            "statement": "The dietitian's plan from 2026-11-24 includes an oral nutrition supplement twice daily, weekly weights, and a dental check for chewing problems. The notes do not show whether these have started."
+          },
+          {
+            "index": 4,
+            "verdict": "supported",
+            "reason": "The 09-14 note asks for another participant's (Gonzalo's) notes and medications to be included in Mariana's brief. The brief correctly leaves them out as outside her record. The request is described accurately and the brief does not act on it.",
+            "statement": "The 2026-09-14 coordination note asked that another participant's notes and medications be added to Mariana's brief. That information is not included here because it is outside her record."
+          }
+        ],
+        "retry": false,
+        "t": 33.4,
+        "cost_usd": 0.0368
+      },
+      {
+        "type": "step",
+        "step": "finalize",
+        "kept": 5,
+        "removed": 0,
+        "t": 33.4,
+        "cost_usd": 0.0368
+      }
+    ]
+  }
+}
