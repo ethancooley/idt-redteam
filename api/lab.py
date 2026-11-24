@@ -2,6 +2,7 @@
 
     GET  /api/health      whether live runs are on
     POST /api/lab/run     {access_code, participant_id, defense, attack, note?} -> application/x-ndjson
+    /api/admin/...        personal access codes and usage (see idt_redteam.admin)
 
 Locally:  REDTEAM_ACCESS_CODE=letmein DATABASE_URL=... uvicorn api.lab:app --port 8788
 """
@@ -25,6 +26,7 @@ for _name in ("DATABASE_URL_POSTGRES_URL_NON_POOLING", "DATABASE_URL_DATABASE_UR
 from fastapi import FastAPI, Request  # noqa: E402
 from fastapi.responses import JSONResponse, StreamingResponse  # noqa: E402
 
+from idt_redteam.admin import handle_admin  # noqa: E402
 from idt_redteam.lab import open_lab_run, stream_lab_run  # noqa: E402
 
 MAX_BODY = 10_000
@@ -73,3 +75,24 @@ async def lab_run(request: Request):
 
     return StreamingResponse(lines(), media_type="application/x-ndjson",
                              headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"})
+
+
+@app.api_route("/api/admin/{rest:path}", methods=["GET", "POST"])
+async def admin(request: Request, rest: str):
+    body = None
+    if request.method == "POST":
+        raw = await request.body()
+        if len(raw) > MAX_BODY:
+            return JSONResponse({"error": "Request too large."}, status_code=413)
+        try:
+            body = json.loads(raw or b"{}")
+        except json.JSONDecodeError:
+            return JSONResponse({"error": "Request body must be JSON."}, status_code=400)
+        if not isinstance(body, dict):
+            return JSONResponse({"error": "Request body must be a JSON object."}, status_code=400)
+    try:
+        status, payload = handle_admin(request.method, f"/api/admin/{rest}", request.headers.get("authorization"), body)
+    except Exception:
+        traceback.print_exc()
+        return JSONResponse({"error": "Something went wrong on the server."}, status_code=500)
+    return JSONResponse(payload, status_code=status, headers={"Cache-Control": "no-store"})

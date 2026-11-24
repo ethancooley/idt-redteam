@@ -208,9 +208,14 @@ REDTEAM_ACCESS_CODE=choose-one DATABASE_URL="$LAB_DATABASE_URL" uvicorn api.lab:
 cd web && npm install && npm run dev                                       # /api goes to port 8788
 ```
 
-On Vercel, set `ANTHROPIC_API_KEY`, `REDTEAM_ACCESS_CODE`, and `DATABASE_URL` (the lab's database, never the
-site database of IDT Prep Copilot), and optionally `REDTEAM_DAILY_LIMIT` (default 20) and
-`REDTEAM_PER_CLIENT_LIMIT` (default 3). To give someone a personal code with its own limits:
+On Vercel, set `ANTHROPIC_API_KEY`, `REDTEAM_ACCESS_CODE`, `REDTEAM_ADMIN_TOKEN`, and `DATABASE_URL` (the
+lab's database, never the site database of IDT Prep Copilot), and optionally `REDTEAM_DAILY_LIMIT`
+(default 20) and `REDTEAM_PER_CLIENT_LIMIT` (default 3).
+
+**Access codes.** The admin page at `/admin` (not linked from the site; sign in with `REDTEAM_ADMIN_TOKEN`)
+makes personal codes with their own run, spending, and expiry limits, shows what each has used, changes
+limits, turns codes off, and lists recent lab runs with their attack, defense, code, and cost. A new code is
+shown once, with a message ready to send. From the command line instead:
 
 ```bash
 DATABASE_URL="$LAB_DATABASE_URL" python -m idt_redteam.lab_codes create "Prof. Smith" --runs 5 --budget 0.50
@@ -228,7 +233,8 @@ src/idt_redteam/
   score.py                 Attack scoring on top of the upstream evidence-based scorer
   harness.py               Runs the agent on each attack, scores, writes runs/<timestamp>/
   lab.py                   The attack lab: planted notes per run, access codes and caps, streaming
-  lab_codes.py             Create, list, and turn off personal access codes for the lab
+  lab_codes.py             Create, list, and turn off personal access codes from the command line
+  admin.py                 The admin API behind /admin: codes, usage, and recent lab runs
   web_export.py            Writes the site's data and the lab's answer keys and presets
 api/lab.py                 Vercel Function for the attack lab
 web/                       The website (Vite + React)

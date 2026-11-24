@@ -1,4 +1,5 @@
 import { NavLink, Route, Routes } from "react-router-dom";
+import { Admin } from "./pages/Admin";
 import { Attacks } from "./pages/Attacks";
 import { CasePage } from "./pages/CasePage";
 import { Home } from "./pages/Home";
@@ -25,6 +26,7 @@ export function App() {
           <Route path="/case/:id" element={<CasePage />} />
           <Route path="/lab" element={<Lab />} />
           <Route path="/method" element={<Method />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<p>That page doesn't exist. <NavLink to="/">Go to the results</NavLink></p>} />
         </Routes>
       </main>
