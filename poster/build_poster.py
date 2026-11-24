@@ -1,6 +1,7 @@
 """Build the course poster (48 x 36 in, landscape) as a PDF from the study's own result files.
 
-    python poster/build_poster.py            # writes poster/poster.html and poster/poster.pdf
+    python poster/build_poster.py            # writes poster/poster.html and poster/poster.pdf,
+                                             # and copies the PDF to web/public/ so the site serves it
 
 Every number on the poster is read from results/ and web/public/data/, so it always matches the site.
 Needs Google Chrome (or Chromium) for the HTML-to-PDF step, and `pip install segno` for the QR codes.
@@ -296,7 +297,8 @@ footer p {{ margin:0; max-width:30in; }}
     subprocess.run([chrome, "--headless", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer",
                     f"--print-to-pdf={HERE / 'poster.pdf'}", out_html.as_uri()], check=True,
                    capture_output=True)
-    print(f"Wrote {HERE / 'poster.pdf'}")
+    shutil.copyfile(HERE / "poster.pdf", ROOT / "web" / "public" / "poster.pdf")  # served at /poster.pdf
+    print(f"Wrote {HERE / 'poster.pdf'} and copied it to web/public/poster.pdf")
 
 
 if __name__ == "__main__":

@@ -33,7 +33,8 @@ export function App() {
       <footer className="site">
         <p>
           A red-teaming study of <a href="https://idt.ethancooley.com">IDT Prep Copilot</a> for Duke AIPI's
-          Responsible AI course. Every participant, note, and clinician here is synthetic.
+          Responsible AI course. Every participant, note, and clinician here is synthetic.{" "}
+          <a href="/poster.pdf">Download the poster (PDF)</a>.
         </p>
       </footer>
     </>

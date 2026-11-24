@@ -73,6 +73,10 @@ export function Method() {
         <a href="https://github.com/ethancooley/idt-redteam">github.com/ethancooley/idt-redteam</a>. The agent:{" "}
         <a href="https://github.com/ethancooley/idt-prep-copilot">github.com/ethancooley/idt-prep-copilot</a>.
       </p>
+      <p>
+        The course poster: <a href="/poster.pdf">poster.pdf</a> (48 × 36 in, built from the same result files as
+        this site).
+      </p>
     </article>
   );
 }
