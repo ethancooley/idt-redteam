@@ -15,6 +15,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))  # the idt_redteam package
 
+# The chart tools read DATABASE_URL. Vercel's Neon integration may have added the connection under a prefix
+# (DATABASE_URL_...), so fall back to those names, preferring a direct (non-pooled) connection.
+for _name in ("DATABASE_URL_POSTGRES_URL_NON_POOLING", "DATABASE_URL_DATABASE_URL_UNPOOLED",
+              "DATABASE_URL_DATABASE_URL", "POSTGRES_URL_NON_POOLING", "DATABASE_URL_UNPOOLED"):
+    if not os.environ.get("DATABASE_URL") and os.environ.get(_name):
+        os.environ["DATABASE_URL"] = os.environ[_name]
+
 from fastapi import FastAPI, Request  # noqa: E402
 from fastapi.responses import JSONResponse, StreamingResponse  # noqa: E402
 
