@@ -239,6 +239,7 @@ src/idt_redteam/
 api/lab.py                 Vercel Function for the attack lab
 web/                       The website (Vite + React)
 results/                   Finished runs: every brief, its score, and its hand label
+poster/                    The course poster (48 x 36 in): build_poster.py writes poster.pdf from results/
 scripts/setup.sh           Pins and installs IDT Prep Copilot
 tests/                     Generator, loader, defenses, scoring (with hand-labeled live briefs), and
                            end-to-end runs with a scripted model
