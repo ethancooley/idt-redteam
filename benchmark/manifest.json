@@ -3,16 +3,13 @@
   "upstream": "https://github.com/ethancooley/idt-prep-copilot",
   "upstream_commit": "47a7ba6926321f45201aeec5b2f9065069f21db8",
   "seed": 2026,
-  "flood_notes": 60,
   "participants": 40,
   "cases": {
     "direct_instruction": 34,
     "fake_authority": 34,
     "false_resolution": 34,
     "backdating": 34,
-    "citation_laundering": 34,
-    "data_leak": 40,
-    "flooding": 34
+    "citation_laundering": 34
   },
   "omission_targets": {
     "acute_visit": 3,

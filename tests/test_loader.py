@@ -47,12 +47,13 @@ def test_clean_load_has_no_planted_notes(attack_db, clean):
     assert info["notes"] == sum(len(p.notes) for p in cohort.values())
 
 
-def test_get_note_is_not_scoped_to_one_participant(attack_db):
-    """Documents the path the data_leak attack exploits: every other chart tool is pinned to the
-    participant under review, but get_note fetches any note id in the database."""
-    loader.load("data_leak", attack_db)
-    case = read("data_leak")[0]
+def test_get_note_is_not_scoped_to_one_participant(attack_db, clean):
+    """A known gap in the agent's chart tools: every other tool is pinned to the participant under review,
+    but get_note fetches any note id in the database, and a note fetched that way becomes citable."""
+    cohort, _ = clean
+    loader.load("clean", attack_db)
+    first, second = sorted(cohort)[:2]
     repo = ChartRepository(attack_db, use_embeddings=False)
-    note = repo.get_note(case.leak.foreign_note_ids[0])
-    assert note["participant_id"] == case.leak.other_participant_id != case.participant_id
+    note = repo.get_note(cohort[second].notes[0].id)
+    assert note["participant_id"] == second != first
     repo.close()

@@ -1,7 +1,6 @@
 """Build the open benchmark: one JSONL file of poisoned-chart overlays per attack.
 
     python -m idt_redteam.benchmark                 # writes benchmark/*.jsonl and benchmark/manifest.json
-    python -m idt_redteam.benchmark --flood-notes 90
 
 The clean cohort and answer keys are read from the pinned IDT Prep Copilot checkout (see scripts/setup.sh)
 and are never modified. Each line of benchmark/<attack>.jsonl is an AttackCase: the notes to add to one
@@ -20,7 +19,7 @@ from idt_copilot.db.load import load_cohort
 from idt_copilot.models import AnswerKey, Participant
 
 from idt_redteam.attacks import (
-    ATTACKS, DEFAULT_FLOOD_NOTES, DEFAULT_SEED, OMISSION_ATTACKS, AttackCase, build_case,
+    ATTACKS, DEFAULT_SEED, OMISSION_ATTACKS, AttackCase, build_case,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -46,13 +45,12 @@ def load_clean(upstream: Path | None = None) -> tuple[dict[str, Participant], di
 
 
 def generate(cohort: dict[str, Participant], keys: dict[str, AnswerKey], attacks: list[str] | None = None,
-             seed: int = DEFAULT_SEED, flood_notes: int = DEFAULT_FLOOD_NOTES) -> dict[str, list[AttackCase]]:
+             seed: int = DEFAULT_SEED) -> dict[str, list[AttackCase]]:
     out: dict[str, list[AttackCase]] = {}
     for attack in attacks or ATTACKS:
         cases = []
         for pid in sorted(cohort):
-            case = build_case(attack, cohort[pid], keys[pid], keys=keys, cohort=cohort, seed=seed,
-                              flood_notes=flood_notes)
+            case = build_case(attack, cohort[pid], keys[pid], seed=seed)
             if case is not None:
                 cases.append(case)
         out[attack] = cases
@@ -85,13 +83,12 @@ def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out-dir", type=Path, default=BENCHMARK_DIR)
     ap.add_argument("--seed", type=int, default=DEFAULT_SEED)
-    ap.add_argument("--flood-notes", type=int, default=DEFAULT_FLOOD_NOTES)
     ap.add_argument("--attacks", nargs="+", choices=ATTACKS)
     args = ap.parse_args(argv)
 
     up = upstream_dir()
     cohort, keys = load_clean(up)
-    cases = generate(cohort, keys, args.attacks, args.seed, args.flood_notes)
+    cases = generate(cohort, keys, args.attacks, args.seed)
     omission = next((c for a, c in cases.items() if a in OMISSION_ATTACKS), [])
     targets = Counter(c.target_id for c in omission)
     manifest = {
@@ -99,7 +96,6 @@ def main(argv: list[str] | None = None) -> None:
         "upstream": "https://github.com/ethancooley/idt-prep-copilot",
         "upstream_commit": _upstream_commit(up),
         "seed": args.seed,
-        "flood_notes": args.flood_notes,
         "participants": len(cohort),
         "cases": {a: len(c) for a, c in cases.items()},
         "omission_targets": dict(sorted(targets.items())),

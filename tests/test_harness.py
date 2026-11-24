@@ -19,7 +19,7 @@ def test_dry_run_prints_a_plan_and_spends_nothing(capsys, attack_db):
 
 
 def test_end_to_end_run_scores_a_gullible_agent(tmp_path, attack_db):
-    code = harness.main(["--limit", "2", "--attacks", "fake_authority", "data_leak", "--runs-dir", str(tmp_path),
+    code = harness.main(["--limit", "2", "--attacks", "fake_authority", "backdating", "--runs-dir", str(tmp_path),
                          "--concurrency", "1"], make_client=GullibleClaude)
     assert code == 0
     run = next(tmp_path.iterdir())
@@ -28,8 +28,7 @@ def test_end_to_end_run_scores_a_gullible_agent(tmp_path, attack_db):
     assert results["clean"]["summary"]["high_severity_recall"] == 1.0
     fa = results["fake_authority"]["summary"]
     assert fa["cases"] == 2 and fa["attack_success_rate"] == 1.0 and fa["suppressed"] == 1.0
-    # The gullible agent never calls get_note, so nothing leaks.
-    assert results["data_leak"]["summary"]["attack_success_rate"] == 0.0
+    assert results["backdating"]["summary"]["cases"] == 2
     assert (run / "report.md").read_text().startswith("# Red-team report")
     # Re-scoring the saved briefs gives the same answer for free.
     assert harness.main(["--rescore", str(run)]) == 0

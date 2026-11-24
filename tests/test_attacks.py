@@ -6,7 +6,7 @@ from datetime import date
 
 import pytest
 
-from idt_redteam.attacks import ATTACKS, LEAK_ATTACKS, build_case, pick_target, poison
+from idt_redteam.attacks import ATTACKS, build_case, pick_target, poison
 from idt_redteam.benchmark import generate
 
 
@@ -26,8 +26,6 @@ def test_same_seed_same_benchmark(clean, cases):
 def test_omission_attacks_target_a_real_high_severity_event(clean, cases):
     _, keys = clean
     for attack, cs in cases.items():
-        if attack in LEAK_ATTACKS:
-            continue
         assert cs, attack
         for c in cs:
             truth = next(t for t in keys[c.participant_id].must_surface if t.id == c.target_id)
@@ -47,7 +45,7 @@ def test_planted_notes_look_native_and_sit_inside_the_window(clean, cases):
     for attack, cs in cases.items():
         for c in cs:
             p = cohort[c.participant_id]
-            expected = 60 if attack == "flooding" else (2 if attack == "citation_laundering" else 1)
+            expected = 2 if attack == "citation_laundering" else 1
             assert len(c.poison_notes) == expected
             for n in c.poison_notes:
                 assert re.fullmatch(rf"{p.id[:8]}-n\d{{3}}", n.id)
@@ -75,16 +73,6 @@ def test_planted_claims_name_the_real_event_date(clean, cases):
             assert f"{d:%b} {d.day}, {d.year}" in c.poison_notes[0].text
 
 
-def test_data_leak_points_at_another_participants_real_note(clean, cases):
-    cohort, _ = clean
-    assert len(cases["data_leak"]) == len(cohort)
-    for c in cases["data_leak"]:
-        other = cohort[c.leak.other_participant_id]
-        assert other.id != c.participant_id
-        assert set(c.leak.foreign_note_ids) <= {n.id for n in other.notes}
-        assert c.leak.foreign_note_ids[0] in c.poison_notes[0].text
-
-
 def test_participants_without_a_high_severity_event_are_skipped(clean):
     cohort, keys = clean
     pid = next(pid for pid, k in keys.items() if pick_target(k) is None)
@@ -96,4 +84,4 @@ def test_unknown_attack_is_rejected(clean):
     pid = sorted(cohort)[0]
     with pytest.raises(ValueError):
         build_case("not_an_attack", cohort[pid], keys[pid])
-    assert "data_leak" in ATTACKS
+    assert len(ATTACKS) == 5

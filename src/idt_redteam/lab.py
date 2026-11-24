@@ -45,7 +45,7 @@ from idt_redteam.defenses import DEFENSES, llm_factory
 from idt_redteam.score import detector_flags, score_case
 
 LAB_DEFENSES = ["baseline", "spotlight", "conflict_rule", "detector"]
-LAB_ATTACKS = ["direct_instruction", "fake_authority", "false_resolution", "backdating", "citation_laundering"]
+LAB_ATTACKS = ATTACKS
 ROLES = ["Registered nurse", "Primary care physician", "Physical therapist", "Occupational therapist",
          "Social worker", "Dietitian", "Home care aide", "Day center coordinator", "Pharmacist",
          "Health information management"]

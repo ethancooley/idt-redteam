@@ -4,9 +4,8 @@
     python -m idt_redteam.loader clean                   # the unpoisoned cohort, for the utility baseline
     python -m idt_redteam.loader fake_authority --embed  # also embed notes, so search_notes is semantic
 
-The attack database holds the whole cohort, not just the attacked charts, so attacks that reach for
-another participant's records (data_leak) find them there, as they would in a real system. Loading
-replaces everything in the target database, so the loader refuses to touch the clean database.
+The attack database holds the whole cohort, not just the attacked charts, as a real chart database
+would. Loading replaces everything in the target database, so the loader refuses to touch the clean database.
 """
 from __future__ import annotations
 

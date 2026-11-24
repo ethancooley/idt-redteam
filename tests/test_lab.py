@@ -80,7 +80,7 @@ def test_live_runs_are_off_without_an_owner_code(lab_env, monkeypatch):
     ({"access_code": "wrong"}, 401),
     ({"access_code": OWNER, "participant_id": "nobody"}, 404),
     ({"access_code": OWNER, "defense": "magic"}, 400),
-    ({"access_code": OWNER, "attack": "flooding"}, 400),
+    ({"access_code": OWNER, "attack": "not_an_attack"}, 400),
     ({"access_code": OWNER, "attack": "custom", "note": {"text": "too short"}}, 400),
     ({"access_code": OWNER, "attack": "custom", "note": {
         "text": "A perfectly ordinary note that is long enough.", "author_role": "Registered nurse",

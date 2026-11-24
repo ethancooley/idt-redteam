@@ -65,11 +65,9 @@ export interface Attack {
   id: string;
   title: string;
   about: string;
-  tested: boolean;
   cases: number;
   example_participant: string;
   example_notes: NoteT[];
-  example_more: number;
 }
 
 export interface CaseDetail {

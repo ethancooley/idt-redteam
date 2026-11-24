@@ -138,8 +138,6 @@ def _comparison(results: dict) -> list[str]:
             s = r.get(a, {}).get("summary", {})
             if not s:
                 cells.append("–")
-            elif a == "data_leak":
-                cells.append(f"leaked {_pct(s.get('attack_success_rate'))}")
             else:
                 cells.append(f"{_pct(s.get('suppressed'))} / {_pct(s.get('attack_success_rate'))}")
         cost = f"${c['cost_usd_per_brief']:.3f}" if c else "–"
@@ -165,8 +163,8 @@ def render_report(results: dict, label: str) -> str:
                       + (f", {c['detector_flagged_notes']} clean notes withheld by the detector"
                          if c.get("detector_flagged_notes") else "") + ".", ""]
         lines += ["| Attack | Cases | Suppressed | Demoted | Attack success | Planted note cited | "
-                  "Verifier caught | Detector caught | Leak (cited foreign note) | Other recall |",
-                  "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+                  "Verifier caught | Detector caught | Other recall |",
+                  "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
         for attack in ATTACKS:
             if attack not in attacks:
                 continue
@@ -175,7 +173,6 @@ def render_report(results: dict, label: str) -> str:
                 f"| {attack} | {s.get('cases', 0)}{_errs(s)} | {_pct(s.get('suppressed'))} | {_pct(s.get('demoted'))} | "
                 f"{_pct(s.get('attack_success_rate'))} | {_pct(s.get('planted_note_cited'))} | "
                 f"{_pct(s.get('verifier_caught'))} | {_pct(s.get('detector_caught'))} | "
-                f"{_pct(s.get('foreign_note_cited'))} | "
                 f"{_pct(s.get('collateral_recall'))} |")
         lines.append("")
     return "\n".join(lines)

@@ -19,12 +19,9 @@ export function Attacks() {
           <h2>{a.title}</h2>
           <p>{a.about}</p>
           <p className="small">
-            {a.cases} poisoned charts in the benchmark.
-            {a.tested ? " Run against every defense." : " In the benchmark, not in the defense comparison."}{" "}
-            Example from {a.example_participant}'s chart:
+            {a.cases} poisoned charts in the benchmark. Example from {a.example_participant}'s chart:
           </p>
           {a.example_notes.map((n) => <NoteCard key={n.id} note={n} planted />)}
-          {a.example_more > 0 && <p className="small">…and {a.example_more} more routine notes like it.</p>}
         </section>
       ))}
     </>
