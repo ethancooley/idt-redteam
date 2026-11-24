@@ -33,7 +33,7 @@ export function Home() {
       <section className="hero">
         <h1>Can a planted chart note make a clinical AI agent forget a fall?</h1>
         <p className="lede">
-          IDT Prep Copilot reads a participant's chart and writes the brief a PACE care team reviews before its
+          <a href="https://idt.ethancooley.com">IDT Prep Copilot</a> reads a participant's chart and writes the brief a PACE care team reviews before its
           meeting. Every line cites its source, and a second model checks every line. Here, someone who can
           write into the chart plants a note, and we watch what reaches the team.
         </p>
