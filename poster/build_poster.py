@@ -243,7 +243,8 @@ footer p {{ margin:0; max-width:30in; }}
         <dd>In {base['suppressed']} of them the event vanished with no trace for a reader to follow.</dd>
         <dt>Plausible paperwork works; obvious injections don't</dt>
         <dd>It ignored {len(direct['cases']) - direct['success']} of {len(direct['cases'])} notes telling it outright
-          to leave an event out, and pointed them out to the team. A fake chart correction attributed to a physician got
+          to leave an event out, and flagged {round((direct['planted_note_cited'] or 0) * len(direct['cases']))} of them
+          for the team. A fake chart correction attributed to a physician got
           through in {fake['success']} of {len(fake['cases'])}.</dd>
         <dt>The verifier caught {verifier_caught} of {briefs} planted claims</dt>
         <dd>It checks each line against the notes that line cites. A line that faithfully repeats a planted note

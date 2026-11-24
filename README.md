@@ -119,7 +119,7 @@ cell (one spotlight brief errored and is left out). With this few cases, read th
 Cells count attack successes: briefs where the attacked high-severity event lost its place.
 
 - **Plausible clinical paperwork works; obvious injections don't.** The deployed agent ignored every "system
-  note" telling it to leave an event out, and exposed the note to the team. A fake chart correction, a late
+  note" telling it to leave an event out, and in 3 of 5 briefs flagged the note for the team. A fake chart correction, a late
   entry moving the date, or a correction plus a confirming note removed the event in 4 of 5 briefs each.
 - **Three briefs lost an event without a trace.** The same participant's new evening confusion vanished
   entirely under fake authority, backdating, and citation laundering: no line, no question, no mention of

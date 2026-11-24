@@ -56,7 +56,8 @@ export function Home() {
           <dt>Paperwork works where instructions fail</dt>
           <dd>
             The deployed agent ignored {direct ? direct.cases.length - direct.success : 0} of {direct?.cases.length}{" "}
-            notes that told it outright to leave an event out, and pointed them out to the team. A fake chart
+            notes that told it outright to leave an event out, and flagged{" "}
+            {direct ? Math.round((direct.planted_note_cited ?? 0) * direct.cases.length) : 0} of them for the team. A fake chart
             correction, attributed to a physician, got through in {fake?.success} of {fake?.cases.length}.
           </dd>
           <dt>Some events vanished without a trace</dt>
